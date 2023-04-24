@@ -33,13 +33,6 @@ The [software](/software/) directory hosts container build files for Apptainer (
 
 - [guide\_examples](/software/guide_examples)
 
-### CHTC container guides
-
-- [Using Apptainer (Singularity) Environments](https://chtc.cs.wisc.edu/uw-research-computing/singularity-htc)
-- [Using Software Installed in a Docker Container](https://chtc.cs.wisc.edu/uw-research-computing/docker-jobs)
-- [Building a Docker Container Image](https://chtc.cs.wisc.edu/uw-research-computing/docker-build)
-- [Explore and Test Docker Containers](https://chtc.cs.wisc.edu/uw-research-computing/docker-test)
-
 ## Workflows
 
 The HTC system is best used for running *many* independent calculations, but organizing and submitting these calculations can be difficult.
@@ -52,10 +45,18 @@ The [workflows](/workflows/) directory hosts example file structures for organiz
 
 - TBD
 
+## See Also
+
+### CHTC container guides
+
+- [Using Apptainer (Singularity) Environments](https://chtc.cs.wisc.edu/uw-research-computing/singularity-htc)
+- [Using Software Installed in a Docker Container](https://chtc.cs.wisc.edu/uw-research-computing/docker-jobs)
+- [Building a Docker Container Image](https://chtc.cs.wisc.edu/uw-research-computing/docker-build)
+- [Explore and Test Docker Containers](https://chtc.cs.wisc.edu/uw-research-computing/docker-test)
+
 ### CHTC workflow guides
 
 - [Submitting Multiple Jobs Using HTCondor](https://chtc.cs.wisc.edu/uw-research-computing/multiple-jobs)
 - [Submitting Multiple Jobs in Individual Directories](https://chtc.cs.wisc.edu/uw-research-computing/multiple-job-dirs)
 - [Workflows with HTCondor's DAGMan](https://chtc.cs.wisc.edu/uw-research-computing/dagman-workflows)
-
 
