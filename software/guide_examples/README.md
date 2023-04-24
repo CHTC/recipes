@@ -16,8 +16,8 @@ apptainer build example.sif example.def
 
 The simple Apptainer container example installs the `R` package `cowsay` on top of the `rocker` curated `geospatial` container.
 
-- `simple_apptainer.def`
-- `simple_apptainer.sif`
+- [simple\_apptainer.def](simple_apptainer.def)
+- [simple\_apptainer.sif](simple_apptainer.sif)
 
 ### Advanced example
 
