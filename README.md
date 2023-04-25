@@ -77,6 +77,10 @@ tar -xzf simple_DAG.tar.gz
 
 ## See Also
 
+### CHTC GPU templates
+
+- [Template job submissions using GPUs in CHTC](https://github.com/CHTC/templates-GPUs)
+
 ### CHTC container guides
 
 - [Using Apptainer (Singularity) Environments](https://chtc.cs.wisc.edu/uw-research-computing/singularity-htc)
