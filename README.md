@@ -61,7 +61,7 @@ Therefore, for cases where a user may want to have an entire directory, we have 
 Follow the instructions above to retrieve the `.tar.gz` file within the directory of interest. 
 Then unpack the compressed directory using the `tar` command.
 
-For example, the [simple_DAG](/workflows/simple_DAG) directory includes the compressed file `simple_DAG.tar.gz`.
+For example, the [workflows/simple_DAG](/workflows/simple_DAG) directory includes the compressed file `simple_DAG.tar.gz`.
 Retrieve the file using the command
 
 ```
