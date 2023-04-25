@@ -1,4 +1,4 @@
 # AlphaFold
 
-Container definition files and images for using AlphaFold.
+Container definition files for using AlphaFold.
 

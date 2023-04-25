@@ -34,6 +34,13 @@ The [workflows](/workflows/) directory hosts example file structures for organiz
 
 You can retrieve the contents of this repository while logged in to CHTC ([Connecting to CHTC](https://chtc.cs.wisc.edu/uw-research-computing/connecting)) following the instructions below.
 
+### Whole repository
+
+If you want the whole repository, simply run
+
+```
+git clone https://github.com/CHTC/recipes.git
+```
 
 ### Individual files
 

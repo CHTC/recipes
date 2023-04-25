@@ -1,3 +1,3 @@
 # Python
 
-Container images and definition files for using the Python programming language.
+Container definition files for using the Python programming language.

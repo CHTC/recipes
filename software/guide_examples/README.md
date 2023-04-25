@@ -1,7 +1,7 @@
 # guide\_examples
 
 The [CHTC website](chtc.cs.wisc.edu/uw-research-computing/guides) has several guides on using containers on the HTC system.
-This folder contains the build files and corresponding image files discussed in those guides.
+This folder contains the build files discussed in those guides.
 
 ## Apptainer
 
