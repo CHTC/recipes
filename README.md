@@ -2,6 +2,10 @@
 
 Recipes for building software and submitting jobs on [CHTC](https://chtc.cs.wisc.edu).
 
+* [Software](#software)
+* [Workflows](#workflows)
+* [Retrieving Repository Contents from CHTC](#retrieving-repository-contents-from-chtc)
+* [See Also](#see-also)
 
 ## Software
 
@@ -13,7 +17,7 @@ The [software](/software/) directory hosts container build files for Apptainer (
 
 ### Quick links
 
-- [guide\_examples](/software/guide_examples)
+- [software/guide\_examples](/software/guide_examples)
 
 
 ## Workflows
