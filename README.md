@@ -106,3 +106,8 @@ tar -xzf simple_DAG.tar.gz
 - [Submitting Multiple Jobs in Individual Directories](https://chtc.cs.wisc.edu/uw-research-computing/multiple-job-dirs)
 - [Workflows with HTCondor's DAGMan](https://chtc.cs.wisc.edu/uw-research-computing/dagman-workflows)
 
+
+## How to Contribute; Feedback
+
+If you are interested in contributing to this repository, or have feedback on how we can improve it, please reach out 
+to us at chtc@cs.wisc.edu.
