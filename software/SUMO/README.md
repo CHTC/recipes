@@ -14,7 +14,7 @@ Program overview: https://sumo.dlr.de/docs/index.html
 | ---: | :--- | :--- |
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu | |
-| *Base image* | **ubuntu:22.04** | *Docker* |
+| *Base image* | **ubuntu:22.04** | *DockerHub* |
 | *Updated* | April 24, 2023 | *Andrew Owen* |
 | *Last tested on HTC* | April 24, 2023 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
@@ -31,7 +31,7 @@ The `chmod 777 /tmp` command was included to ensure `apt-get` functioned properl
 | ---: | :--- | :--- |
 | *Type* | **Docker** | |
 | *OS* | Ubuntu | |
-| *Base image* | **ubuntu:22.04** | *Docker* |
+| *Base image* | **ubuntu:22.04** | *DockerHub* |
 | *Updated* | May 2, 2023 | *Andrew Owen* |
 | *Last tested on HTC* | May 2, 2023 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
