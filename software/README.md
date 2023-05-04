@@ -54,6 +54,15 @@ The following can be completed from within an interactive job on the HTC system
    ([Managing Large Data in HTC Jobs](https://chtc.cs.wisc.edu/uw-research-computing/file-avail-largedata)).
    Otherwise the `.sif` file will be transferred to your `/home` directory when you exit the interactive job.
    
+4. Clean out the cache
+
+   If building the container on the HTC system, please clear the cache directory before you exit the interactive
+   job session.
+   You can do so by running the command
+   ```
+   apptainer cache clean -f
+   ```
+   
 #### Using an Apptainer container
 
 On the HTC system, you will need to provide instructions within the submit file (for example, `container.sub`) 
