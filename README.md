@@ -9,16 +9,18 @@ Recipes for building software and submitting jobs on [CHTC](https://chtc.cs.wisc
 
 ## Software
 
-CHTC is moving towards using containers for most software installations.
-Containers allow users to have fine control over the libraries and dependencies that their software needs to function.
-Containers are also useful for ensuring portability to other systems and, thus, reproducibility.
-The [software](/software/) directory hosts container build files for Apptainer (f.k.a. Singularity) and Docker.
+Please review how to [create and test apptainer containers](software/README.md) if 
+this is your first time using this "recipes" repository. 
+
+| Software package |
+| ---------------- | 
+| [R: Tidyverse with Packages]()    |
+| [SUMO](software/SUMO)             |
 
 
 ### Quick links
 
 - [software/guide\_examples](/software/guide_examples)
-
 
 ## Workflows
 
