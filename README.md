@@ -12,10 +12,12 @@ Recipes for building software and submitting jobs on [CHTC](https://chtc.cs.wisc
 Please review how to [create and test apptainer containers](software/README.md) if 
 this is your first time using this "recipes" repository. 
 
-| Software package |
+| Available Recipes |
 | ---------------- | 
-| [R: Tidyverse with Packages]()    |
-| [SUMO](software/SUMO)             |
+| [R: packages with base R](software/R/base-r)        |
+| [R: packages with tidyverse](software/R/tidyverse)  |
+| [R: geospatial packages](software/R/geospatial)     |
+| [SUMO](software/SUMO)                               |
 
 
 ### Quick links
