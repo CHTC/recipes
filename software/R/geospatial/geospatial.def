@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: rocker/geospatial:4.3.1
+
+%post
+  install2.r tidymodels lolcow
