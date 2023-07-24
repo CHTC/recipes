@@ -20,7 +20,7 @@ or [R-tidyverse](../tidyverse) containers.
 
 ### Build Notes
 
-When building, change `tidymodels` and `lolcow`
+When building, change `here` and `lolcow`
 to whatever packages you want to install. 
 
 See the [rocker/r-ver tags 
