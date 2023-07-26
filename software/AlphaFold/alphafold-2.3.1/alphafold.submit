@@ -1,0 +1,40 @@
+# submit file for running alphafold jobs in CHTC
+
+universe = container
+container_image = file:///staging/stash/chtc/alphafold/alphafold-2.3.1.sif
+
+# fasta file name is set at the end of the submit file
+# set the maximum template date you want to use
+max_template = 2022-01-01
+# choose whether to use monomer.sh vs multimer.sh
+executable = monomer.sh
+arguments = $(fasta_file) $(max_template)
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+transfer_input_files = $(fasta_file)
+transfer_output_files = outputs/
+
+request_gpus = 1
+# adjust the amount of memory required on the GPU
+require_gpus = (GlobalMemoryMB > 8000)
+# adjust GPU job length
++GPUJobLength = "long"
++WantGpuLab = true
+requirements = (HasGpulabData == true)
+
+request_cpus = 1
+request_memory = 16GB
+request_disk = 20GB
+
+log = logs/job_$(Cluster).log
+error = logs/job_$(Cluster)_$(Process).err
+output = logs/job_$(Cluster)_$(Process).out
+
+# to submit one job
+fasta_file = test.fasta
+queue 1
+# to submit multiple jobs, make a  list of fasta files
+# comment out the above lines and uncomment the below: 
+# queue fasta_file from fasta_list.txt
+
