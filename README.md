@@ -1,42 +1,20 @@
-# recipes
+# CHTC Recipes for Software Installation and Job Submission
 
-Recipes for building software and submitting jobs on [CHTC](https://chtc.cs.wisc.edu).
+Recipes for building software and submitting jobs on [CHTC](https://chtc.cs.wisc.edu). 
+Click on the links below to view a list of available options: 
 
-* [Software](#software)
-* [Workflows](#workflows)
-* [Retrieving Repository Contents from CHTC](#retrieving-repository-contents-from-chtc)
-* [See Also](#see-also)
+* [Software](software)
+* [Workflows](workflows)
 
-## Software
-
-CHTC is moving towards using containers for most software installations.
-Containers allow users to have fine control over the libraries and dependencies that their software needs to function.
-Containers are also useful for ensuring portability to other systems and, thus, reproducibility.
-The [software](/software/) directory hosts container build files for Apptainer (f.k.a. Singularity) and Docker.
-
-
-### Quick links
-
-- [software/guide\_examples](/software/guide_examples)
-
-
-## Workflows
-
-The HTC system is best used for running *many* independent calculations, but organizing and submitting these calculations can be difficult.
-Thankfully, [HTCondor](https://research.cs.wisc.edu/htcondor) has several builtin methods for submitting many jobs at a time, but it is still up to the user to organize the requisite files in order to leverage these tools.
-The [workflows](/workflows/) directory hosts example file structures for organizing large workflows that can take advantage of HTCondor's built in methods.
-
-> Note: Always test new workflows for a small (2-5) number of jobs before attempting to use the new workflow at full scale.
-
-
-### Quick links
-
-- TBD
-
+We welcome contributions and feedback! [See below](#contributions-and-feedback) for more details. 
 
 ## Retrieving Repository Contents from CHTC
 
 You can retrieve the contents of this repository while logged in to CHTC ([Connecting to CHTC](https://chtc.cs.wisc.edu/uw-research-computing/connecting)) following the instructions below.
+
+1. [Whole Repository](#whole-repository)
+1. [Individual Files](#individual-files)
+1. [Sub-Directories](#directory)
 
 ### Whole repository
 
@@ -63,7 +41,6 @@ The command to retrieve the file is
 wget https://github.com/CHTC/recipes/raw/main/software/guide_examples/simple_apptainer.def
 ```
 
-
 ### Directory
 
 At this time, GitHub does not have a mechanism for retrieving a sub-directory of a repository.
@@ -86,28 +63,7 @@ tar -xzf simple_DAG.tar.gz
 ```
 
 
-## See Also
-
-### CHTC GPU templates
-
-- [Template job submissions using GPUs in CHTC](https://github.com/CHTC/templates-GPUs)
-
-### CHTC container guides
-
-- [Using Apptainer (Singularity) Environments](https://chtc.cs.wisc.edu/uw-research-computing/singularity-htc)
-- [Using Software Installed in a Docker Container](https://chtc.cs.wisc.edu/uw-research-computing/docker-jobs)
-- [Building a Docker Container Image](https://chtc.cs.wisc.edu/uw-research-computing/docker-build)
-- [Explore and Test Docker Containers](https://chtc.cs.wisc.edu/uw-research-computing/docker-test)
-
-
-### CHTC workflow guides
-
-- [Submitting Multiple Jobs Using HTCondor](https://chtc.cs.wisc.edu/uw-research-computing/multiple-jobs)
-- [Submitting Multiple Jobs in Individual Directories](https://chtc.cs.wisc.edu/uw-research-computing/multiple-job-dirs)
-- [Workflows with HTCondor's DAGMan](https://chtc.cs.wisc.edu/uw-research-computing/dagman-workflows)
-
-
-## How to Contribute; Feedback
+## Contributions and Feedback
 
 If you are interested in contributing to this repository, or have feedback on how we can improve it, please reach out 
 to us at chtc@cs.wisc.edu.

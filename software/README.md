@@ -1,19 +1,29 @@
 # [software](/software/)
 
-Definition files for building containers for use on CHTC.
-CHTC is moving towards using containers for most software installations. 
+If you are new to building your own software in CHTC, we recommend that you 
+first read through our [Software Overivew]() guide. Then choose from the list 
+below: 
+
+| Software Name | Apptainer | Docker | Local Install | 
+| :--- | :---: | :---: | :---: |
+| [Alphafold](AlphaFold) | X | - | - | 
+| [R, base or with packages](R/base-R) | X | - | - | 
+| [R, tidyverse](R/tidyverse) | X | - | - | 
+| [R, geospatial](R/geospatial) | X | - | - | 
+| [SUMO](SUMO) | X | X | - | 
+
+## Overview
+
+*move this to an overview guide?*
+
+CHTC is moving towards using containers for most software installations.
 Containers allow users to have fine control over the libraries and dependencies that their software needs to function.
-Containers are also useful for ensuring portability to other systems and, thus, reproducibility. 
-
-## Organization
-
-The [software](/software/) directory is organized by the top level software program, that is, the main program that 
-the container is intended for.
-For example, the container for SUMO also has Python installed, but Python is a required dependency of SUMO.
-Therefore SUMO is the top level program, and so the container for SUMO is hosted in [software/SUMO](/software/SUMO/) 
-and not in [software/Python](/softare/Python/).
+Containers are also useful for ensuring portability to other systems and, thus, reproducibility.
+The [software](/software/) directory hosts container build files for Apptainer (f.k.a. Singularity) and Docker.
 
 ## Building and Using Containers on CHTC
+
+*move this to an overview guide?*
 
 The [CHTC](https://chtc.cs.wisc.edu) website has several guides pertaining to building and using containers on the 
 HTC system.
@@ -147,3 +157,17 @@ Now when you run a job using `condor_submit container.sub`, HTCondor will automa
 from DockerHub and run the container for you, and the executable that you provided in the submit file will be run 
 within that container.
 Otherwise, the calculation will be no different than a "regular" job.
+
+## Related User Guides
+
+### CHTC GPU templates
+
+- [Template job submissions using GPUs in CHTC](https://github.com/CHTC/templates-GPUs)
+
+### CHTC container guides
+
+- [Using Apptainer (Singularity) Environments](https://chtc.cs.wisc.edu/uw-research-computing/singularity-htc)
+- [Using Software Installed in a Docker Container](https://chtc.cs.wisc.edu/uw-research-computing/docker-jobs)
+- [Building a Docker Container Image](https://chtc.cs.wisc.edu/uw-research-computing/docker-build)
+- [Explore and Test Docker Containers](https://chtc.cs.wisc.edu/uw-research-computing/docker-test)
+
