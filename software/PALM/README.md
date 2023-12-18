@@ -20,6 +20,10 @@ Requires either [GNU Octave](https://octave.org/) or Matlab.
 | *Last tested on HTC* | December 15, 2023 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
+```
+wget https://github.com/CHTC/recipes/raw/main/software/PALM/palm-alpha119-octave-440.def
+```
+
 ### Build Notes
 
 This specific instance was created for processing neural imaging. 
