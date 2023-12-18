@@ -1,0 +1,48 @@
+Bootstrap: docker
+From: gnuoctave/octave:4.4.0
+
+%post
+    # installing required dependencies
+    chmod 777 /tmp
+    export DEBIAN_FRONTEND=noninteractive
+    apt update -y
+    apt install -y curl git nano tar vim wget
+    octave --eval 'pkg install -forge image'
+
+    # setting up PALM
+    wget https://s3-us-west-2.amazonaws.com/andersonwinkler/palm/palm-alpha119.tar.gz
+    tar -xzf palm-alpha119.tar.gz \
+        && rm palm-alpha119.tar.gz
+
+    cat << EOF >> /usr/local/share/octave/site/m/startup/octaverc
+addpath('/palm-alpha119/palm')
+EOF
+
+    # recompiling .mex files per https://www.jiscmail.ac.uk/cgi-bin/webadmin?A2=fsl;f141e60f.1903
+    cd /palm-alpha119/fileio/\@file_array/private/ \
+        && rm -f *.mex \
+        && mkoctfile --mex mat2file.c \
+        && mkoctfile --mex init.c \
+        && mkoctfile --mex file2mat.c
+
+    # This step fails for miniz.c
+    cd /palm-alpha119/fileio/\@gifti/private/ \
+        && rm -f *.mex \
+        && mkoctfile --mex zstream.c
+        # && mkoctfile --mex miniz.c
+
+    cd /palm-alpha119/fileio/\@nifti/private/ \
+        && rm -f *.mex \
+        && mkoctfile --mex nifti_stats_mex.c \
+        && mkoctfile --mex nifti_stats.c
+
+    cd /palm-alpha119/fileio/\@xmltree/private/ \
+        && rm -f *.mex \
+        && mkoctfile --mex xml_findstr.c
+
+    cd /palm-alpha119/fileio/extras/ \
+        && rm -f *.mex \
+        && mkoctfile --mex spm_existfile.c
+
+%environment
+    export PATH=/palm-alpha119:$PATH
