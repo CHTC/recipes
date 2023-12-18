@@ -9,7 +9,7 @@ Program overview: [https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/PALM](https://fsl.fmri
 
 Requires either [GNU Octave](https://octave.org/) or Matlab.
 
-## [palm-119alpha-octave-440.def](palm-119alpha-octave-440.def)
+## [palm-alpha119-octave-440.def](palm-alpha119-octave-440.def)
 
 | | | |
 | ---: | :--- | :--- |
