@@ -1,7 +1,9 @@
 # submit file for running alphafold jobs in CHTC
 
 universe = container
-container_image = file:///staging/stash/chtc/alphafold/alphafold-2.3.1.sif
+# copy /staging/stash/chtc/alphafold/alphafold-2.3.1.sif to your *own* staging folder
+# and then replace USER with your username
+container_image = file:///staging/USER/alphafold/alphafold-2.3.1.sif
 
 # fasta file name is set at the end of the submit file
 # set the maximum template date you want to use
