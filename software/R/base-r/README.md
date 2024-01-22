@@ -14,13 +14,13 @@ or [R-tidyverse](../tidyverse) containers.
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu | |
 | *Base image* | **rocker/r-ver:4.1.3** | *DockerHub* |
-| *Updated* | June 19, 2023 | *Christina Koch* |
+| *Updated* | 2024-01-22 | *Andrew Owen* |
 | *Last tested on HTC* | - | - |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
 
-When building, change `here` and `lolcow`
+When building, change `cowsay` and `fortunes`
 to whatever packages you want to install. 
 
 See the [rocker/r-ver tags 
