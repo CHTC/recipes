@@ -2,4 +2,4 @@ Bootstrap: docker
 From: rocker/geospatial:4.3.1
 
 %post
-  install2.r tidymodels lolcow
+    R -e "install.packages(c('cowsay','fortunes'), dependencies=TRUE, repos='http://cran.rstudio.com/')"
