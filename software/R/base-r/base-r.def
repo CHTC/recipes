@@ -1,0 +1,8 @@
+Bootstrap: docker
+From: rocker/r-ver:4.3.1
+
+%files
+  install.R /opt
+
+%post
+  Rscript /opt/install.R

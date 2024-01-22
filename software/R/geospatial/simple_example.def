@@ -1,5 +1,0 @@
-Bootstrap: docker
-From: rocker/geospatial:4.2.2
-
-%post
-    R -e "install.packages('cowsay', dependencies=TRUE, repos='http://cran.rstudio.com/')"
