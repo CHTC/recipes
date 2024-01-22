@@ -7,6 +7,10 @@ by specialty.
 - [Using tidyverse with additional packages](tidyverse)
 - [Using R geospatial packages](geospatial)
 
+These containers are based on the [Rocker](https://rocker-project.org/) pre-built containers. 
+For more information about Rocker and the containers they provide, 
+see [here](https://rocker-project.org/images/).
+
 ## How to install packages
 
 There are two ways that you can pass the `R` commands in the `%post` section
