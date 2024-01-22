@@ -1,8 +1,16 @@
 Bootstrap: docker
 From: rocker/r-ver:4.3.1
 
-%files
-  install.R /opt
-
 %post
-  Rscript /opt/install.R
+    mkdir -p /opt
+    cd /opt
+
+    # Create install.R script for R install commands.
+    cat << EOF > install.R
+# Install commands go here
+pkgs <- c('cowsay','fortunes')
+install.packages(pkgs, dependencies=TRUE, repos='http://cran.rstudio.com/')
+EOF
+
+    # Execute install.R script
+    Rscript /opt/install.R
