@@ -19,10 +19,9 @@ RUN apt-get install -y \
 
 RUN git clone --recursive https://github.com/eclipse/sumo
 RUN export SUMO_HOME=/sumo
-RUN mkdir sumo/build/cmake-build \
-        && cd sumo/build/cmake-build \
-        && cmake ../../ \
-        && make
+RUN cd $SUMO_HOME \
+    && cmake -B build . \
+    && cmake --build build -j$(nproc)
 
 ENV SUMO_HOME=/sumo
 ENV PATH=/sumo/bin/:$PATH
