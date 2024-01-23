@@ -22,9 +22,9 @@ From: ubuntu:22.04
 
     git clone --recursive https://github.com/eclipse/sumo
     export SUMO_HOME=/sumo
-    mkdir sumo/build/cmake-build && cd sumo/build/cmake-build
-    cmake ../..
-    make
+    cd $SUMO_HOME
+    cmake -B build .
+    cmake --build build -j$(nproc)
 
 %environment
     export SUMO_HOME=/sumo
