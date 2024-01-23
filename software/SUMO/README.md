@@ -32,8 +32,8 @@ The `chmod 777 /tmp` command was included to ensure `apt-get` functioned properl
 | *Type* | **Docker** | |
 | *OS* | Ubuntu | |
 | *Base image* | **ubuntu:22.04** | *DockerHub* |
-| *Updated* | May 2, 2023 | *Andrew Owen* |
-| *Last tested on HTC* | May 2, 2023 | *Andrew Owen* |
+| *Updated* | 2024-01-23 | *Andrew Owen* |
+| *Last tested on HTC* | 2023-05-02 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
