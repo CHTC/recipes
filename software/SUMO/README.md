@@ -15,8 +15,8 @@ Program overview: https://sumo.dlr.de/docs/index.html
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu | |
 | *Base image* | **ubuntu:22.04** | *DockerHub* |
-| *Updated* | April 24, 2023 | *Andrew Owen* |
-| *Last tested on HTC* | April 24, 2023 | *Andrew Owen* |
+| *Updated* | 2024-01-23 | *Andrew Owen* |
+| *Last tested on HTC* | 2023-04-24 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
