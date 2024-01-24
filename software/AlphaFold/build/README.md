@@ -4,17 +4,6 @@ Instructions for building an Alphafold apptainer container
 using the [NMRBox 
 repository](https://github.com/NMRbox/alphafold_singularity). 
 
-## [base-r.def](base-R.def)
-
-| | | |
-| ---: | :--- | :--- |
-| *Type* | **Apptainer** | |
-| *OS* | Ubuntu | |
-| *Base image* | **Nvidia** | *DockerHub* |
-| *Updated* | July 25, 2023 | *Christina Koch* |
-| *Last tested on HTC* | July 19, 2023 | *Christina Koch* |
-| *Last tested on HPC* | - | - |
-
 ### Build Notes
 
 Prerequisites: CHTC account and `/staging` directory. 
@@ -26,7 +15,7 @@ and 32GB of RAM.
 1. **Get installation files** Once the interactive job starts, clone
 the NMRBox repository and `cd` into the downloaded repository: 
 ```
-$ git clone https://github.com/NMRbox/alphafold_singularity
+$ git clone https://github.fcom/NMRbox/alphafold_singularity
 $ cd alphafold_singularity
 ```
 
@@ -58,7 +47,8 @@ $ apptainer build alphafold.sif alphafold.def
 1. **Move container to staging** Once the build has complete, move the 
 final container to your personal or group staging folder: 
 ```
-$ mv alphafold.sif /staging/$USER
+$ mkdir /staging/$USER/alphafold
+$ mv alphafold.sif /staging/$USER/alphafold
 ```
 
 1. **Exit interactive job** 
