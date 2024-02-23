@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: condaforge/miniforge3:latest
+
+%post
+        # Install some shared library requirements
+        export DEBIAN_FRONTEND=noninteractive
+        apt update -y
+        apt install -y ffmpeg libsm6 libxext6
+
+        # Install Sleap
+        mamba create -y -n sleap -c conda-forge -c nvidia -c sleap -c anaconda sleap=1.3.3
+
+        # Activate environment when starting container
+        cat << EOF > $APPTAINER_ENVIRONMENT
+source /opt/conda/bin/activate
+conda activate sleap
+EOF
