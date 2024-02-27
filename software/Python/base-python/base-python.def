@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: python:3.11
+
+%post
+    python3 -m pip install cowsay 
