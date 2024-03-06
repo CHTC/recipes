@@ -1,11 +1,10 @@
-# [base-python](/software/Python/base-python)
+# [numpy](/software/Python/numpy)
 
-Container definitions files for building Python packages in a base python
-environment.
+Container definitions file that installs numpy in a Python3 environment.
 
-If you are planning to use numpy or scipy packages, consider our recipes for [numpy](../numpy) or [scipy](../scipy).
+If you are planning to use the scipy package, consider our recipe for [scipy](../scipy).
 
-## [base-python.def](base-python.def)
+## [numpy.def](numpy.def)
 
 | | | |
 | ---: | :--- | :--- |
@@ -18,7 +17,12 @@ If you are planning to use numpy or scipy packages, consider our recipes for [nu
 
 ### Build Notes
 
-When building, change `cowsay` and `tqdm` to whatever packages you want to install.
+If including additional python packages, it is best to include them on the same 
+line as numpy:
+
+```
+python3 -m pip install numpy package2 package3
+```
 
 See the [python DockerHub page](https://hub.docker.com/_/python/tags) to see 
 which versions of Python and operating systems are available and adjust the 

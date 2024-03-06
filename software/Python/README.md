@@ -18,6 +18,20 @@ To install packages, add/modify the `python3 -m pip install` command in the prov
 > We encourage you to use the `python3 -m pip install` command instead of `pip install`, 
 > as this will ensure that you are always installing the packages into the version of python that you are using.
 
+If installing multiple packages, it is generally best to place all packages within the same
+`python3 -m pip install` command in case they share dependencies. For example,
+
+```
+python3 -m pip install package1 package2 package3
+```
+
+To specify specific package versions, you can use the built-in `pip` syntax `packagename==version`.
+For example,
+
+```
+python3 -m pip install package1==1.0 package2==3.2.1 package3
+```
+
 ## Choosing the version of python
 
 These recipes are based on the official Python container images on DockerHub: https://hub.docker.com/_/python. 

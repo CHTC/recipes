@@ -1,11 +1,8 @@
-# [base-python](/software/Python/base-python)
+# [scipy](/software/Python/scipy)
 
-Container definitions files for building Python packages in a base python
-environment.
+Container definitions file that installs scipy in a Python3 environment.
 
-If you are planning to use numpy or scipy packages, consider our recipes for [numpy](../numpy) or [scipy](../scipy).
-
-## [base-python.def](base-python.def)
+## [scipy.def](scipy.def)
 
 | | | |
 | ---: | :--- | :--- |
@@ -18,7 +15,12 @@ If you are planning to use numpy or scipy packages, consider our recipes for [nu
 
 ### Build Notes
 
-When building, change `cowsay` and `tqdm` to whatever packages you want to install.
+If including additional python packages, it is best to include them on the same 
+line as scipy:
+
+```
+python3 -m pip install scipy package2 package3
+```
 
 See the [python DockerHub page](https://hub.docker.com/_/python/tags) to see 
 which versions of Python and operating systems are available and adjust the 
