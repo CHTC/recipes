@@ -15,7 +15,7 @@ or [R-tidyverse](../tidyverse) containers.
 | *OS* | Ubuntu | |
 | *Base image* | **rocker/r-ver:4.1.3** | *DockerHub* |
 | *Updated* | 2024-01-22 | *Andrew Owen* |
-| *Last tested on HTC* | - | - |
+| *Last tested on HTC* | 2024-03-06 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
