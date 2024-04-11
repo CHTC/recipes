@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: julia:1.11
+
+%post
+        export JULIA_DEPOT_PATH="/usr/local/share/julia"
+        export JULIA_PROJECT="/opt/julia"
+        julia -e 'using Pkg; Pkg.add("Cowsay"); Pkg.instantiate(); Pkg.precompile()'
+
+%environment
+        export JULIA_DEPOT_PATH="/usr/local/share/julia"
+        export JULIA_PROJECT="/opt/julia"
