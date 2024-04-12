@@ -1,12 +1,28 @@
 # CHTC Recipes for Software Installation and Job Submission
 
 Recipes for building software and submitting jobs on [CHTC](https://chtc.cs.wisc.edu). 
-Click on the links below to view a list of available options: 
+Click on the links below to view a list of available options or see the table below 
+for software options: 
 
 * [Software](software)
-* [Workflows](workflows)
+* [HTC Workflows](htc-workflows)
+* [HPC Workflows](hpc-workflows)
 
 We welcome contributions and feedback! [See below](#contributions-and-feedback) for more details. 
+
+## Software List
+
+| Software Name | Apptainer | Docker | Local Install | HPC Spack | 
+| :--- | :---: | :---: | :---: | :---: |
+| [Python](Python) | X | - | - | - | 
+| [Conda](Conda) | X | - | - | - | 
+| [R](R) | X | - | - | - | 
+| [Matlab](Matlab) | X | - | - | - | 
+| [Alphafold](AlphaFold) | X | - | - | - | 
+| [Julia](Julia) | X | - | - | - | 
+| [SUMO](SUMO) | X | - | - | - | 
+| [PyTorch](PyTorch) | X | - | - | - | 
+| [PALM](PALM) | X | - | - | - | 
 
 ## Retrieving Repository Contents from CHTC
 
@@ -61,7 +77,6 @@ and then unpack the compressed directory with
 ```
 tar -xzf simple_DAG.tar.gz
 ```
-
 
 ## Contributions and Feedback
 
