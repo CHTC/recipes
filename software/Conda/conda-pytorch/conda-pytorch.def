@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: continuumio/miniconda3:latest
+
+%post
+    conda install -y pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia

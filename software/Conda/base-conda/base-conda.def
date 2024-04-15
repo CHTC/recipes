@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: continuumio/miniconda3:latest
+
+%post
+    conda install python=3.10
