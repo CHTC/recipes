@@ -55,3 +55,24 @@ The lines between `cat << EOF` and `EOF` will be written to `install.R`, which y
 can then execute using `Rscript`.
 
 > Note that the second `EOF` must be at the beginning of the line.
+
+## Choosing the version of R
+
+These recipes are based on the Rocker container images on DockerHub: https://hub.docker.com/u/rocker.
+Generally, you can change the "tag" in the `From` line to specify the version of R that you want to use.
+For example,
+
+```
+# Apptainer .def file
+From: rocker/r-ver:4.1
+# Dockerfile
+FROM rocker/r-ver:4.1
+```
+
+will build the container using the `r-ver` container with R version 4.1.
+
+## Using a different base operating system
+
+The base operating system for the Rocker containers is Debian Linux. 
+If you want to use a different operating system, you can install R using Conda. 
+See our [Conda recipes](/software/Conda) and follow the instructions [here](https://docs.anaconda.com/free/working-with-conda/packages/using-r-language/).
