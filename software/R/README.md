@@ -28,10 +28,10 @@ You can pass a command directly to R for execution with the syntax
 For example,
 
 ```
-    R -e "install.packages(c('cowsay','swirl'), dependencies=TRUE, repos='http://cran.rstudio.com/')"
+    R -e "install.packages(c('cowsay','fortunes'), dependencies=TRUE, repos='http://cran.rstudio.com/')"
 ```
 
-installs the `cowsay` and `swirl` packages. 
+installs the `cowsay` and `fortunes` packages. 
 This approach is useful for simple commands, but does not handle nested quotations well.
 
 ### 2. Create an install script
