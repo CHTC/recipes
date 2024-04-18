@@ -1,4 +1,4 @@
-# [HTC Workflows](/htc-workflows/)
+# [HTC Workflows](/workflows-htc/)
 
 ## Overview
 

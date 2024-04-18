@@ -5,8 +5,8 @@ Click on the links below to view a list of available options or see the table be
 for software options: 
 
 * [Software](software)
-* [HTC Workflows](htc-workflows)
-* [HPC Workflows](hpc-workflows)
+* [HPC Workflows](workflows-hpc)
+* [HTC Workflows](workflows-htc)
 
 We welcome contributions and feedback! [See below](#contributions-and-feedback) for more details. 
 

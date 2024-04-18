@@ -1,4 +1,4 @@
-# [HPC Workflows](/hpc-workflows/)
+# [HPC Workflows](/workflows-hpc/)
 
 ## Overview
 
