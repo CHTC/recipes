@@ -23,7 +23,7 @@ containers.
 If you *only* want to use tidyverse packages, comment out 
 the `%post` and `R -e` lines and then build the container. 
 
-When building, change `cowsay` and `swirl`
+When building, change `cowsay` and `fortunes`
 to whatever packages you want to install. 
 
 See the [rocker/tidyverse tags page](https://hub.docker.com/r/rocker/tidyverse/tags) 

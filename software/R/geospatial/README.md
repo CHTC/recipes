@@ -21,7 +21,7 @@ for [R-tidyverse](../tidyverse) containers.
 
 ### Build Notes
 
-When building, change `cowsay` and `swirl`
+When building, change `cowsay` and `fortunes`
 to whatever packages you want to install. 
 
 See the [rocker/r-ver tags page](https://hub.docker.com/r/rocker/geospatial/tags) 
