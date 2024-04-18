@@ -15,13 +15,13 @@ for [R-tidyverse](../tidyverse) containers.
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu | |
 | *Base image* | **rocker/geospatial:4.1.3** | *DockerHub* |
-| *Updated* | 2024-01-22 | *Andrew Owen* |
+| *Updated* | 2024-04-18 | *Andrew Owen* |
 | *Last tested on HTC* | 2024-03-06 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
 
-When building, change `cowsay` and `fortunes`
+When building, change `cowsay` and `swirl`
 to whatever packages you want to install. 
 
 See the [rocker/r-ver tags page](https://hub.docker.com/r/rocker/geospatial/tags) 

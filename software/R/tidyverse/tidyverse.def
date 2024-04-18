@@ -2,4 +2,4 @@ Bootstrap: docker
 From: rocker/tidyverse:4.3.1
 
 %post
-    R -e "install.packages(c('cowsay','fortunes'), dependencies=TRUE, repos='http://cran.rstudio.com/')"
+    R -e "install.packages(c('cowsay','swirl'), dependencies=TRUE, repos='http://cran.rstudio.com/')"

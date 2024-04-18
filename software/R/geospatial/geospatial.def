@@ -8,7 +8,7 @@ From: rocker/geospatial:4.3.1
     # Create install.R script for R install commands.
     cat << EOF > install.R
 # Install commands go here
-pkgs <- c('cowsay','fortunes')
+pkgs <- c('cowsay','swirl')
 install.packages(pkgs, dependencies=TRUE, repos='http://cran.rstudio.com/')
 EOF
 
