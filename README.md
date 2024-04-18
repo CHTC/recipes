@@ -14,23 +14,24 @@ We welcome contributions and feedback! [See below](#contributions-and-feedback) 
 
 | Software Name | Apptainer | Docker | Local Install | HPC Spack | 
 | :--- | :---: | :---: | :---: | :---: |
-| [Python](Python) | X | - | - | - | 
-| [Conda](Conda) | X | - | - | - | 
-| [R](R) | X | - | - | - | 
-| [Matlab](Matlab) | X | - | - | - | 
-| [Alphafold](AlphaFold) | X | - | - | - | 
-| [Julia](Julia) | X | - | - | - | 
-| [SUMO](SUMO) | X | - | - | - | 
-| [PyTorch](PyTorch) | X | - | - | - | 
-| [PALM](PALM) | X | - | - | - | 
+| [Alphafold](/software/AlphaFold) | X | - | - | - | 
+| [Conda](/software/Conda) | X | - | - | - | 
+| [Julia](/software/Julia) | X | - | - | - | 
+| [Matlab](/software/Matlab) | X | - | - | - | 
+| [PALM](/software/PALM) | X | - | - | - | 
+| [Python](/software/Python) | X | - | - | - | 
+| [PyTorch](/software/PyTorch) | X | - | - | - | 
+| [R](/software/R) | X | - | - | - | 
+| [SLEAP](/software/SLEAP) | X | - | - | - |
+| [SUMO](/software/SUMO) | X | - | - | - | 
 
 ## Retrieving Repository Contents from CHTC
 
 You can retrieve the contents of this repository while logged in to CHTC ([Connecting to CHTC](https://chtc.cs.wisc.edu/uw-research-computing/connecting)) following the instructions below.
 
-1. [Whole Repository](#whole-repository)
-1. [Individual Files](#individual-files)
-1. [Sub-Directories](#directory)
+1. [Whole repository](#whole-repository)
+1. [Individual files](#individual-files)
+1. [Directory](#directory)
 
 ### Whole repository
 

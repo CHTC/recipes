@@ -10,15 +10,16 @@ context for using the installation recipes and templates in this folder.
 
 | Software Name | Apptainer | Docker | Local Install | HPC Spack | 
 | :--- | :---: | :---: | :---: | :---: |
-| [Python](Python) | X | - | - | - | 
-| [Conda](Conda) | X | - | - | - | 
-| [R](R) | X | - | - | - | 
-| [Matlab](Matlab) | X | - | - | - | 
-| [Alphafold](AlphaFold) | X | - | - | - | 
-| [Julia](Julia) | X | - | - | - | 
-| [SUMO](SUMO) | X | - | - | - | 
-| [PyTorch](PyTorch) | X | - | - | - | 
-| [PALM](PALM) | X | - | - | - | 
+| [Alphafold](/software/AlphaFold) | X | - | - | - | 
+| [Conda](/software/Conda) | X | - | - | - | 
+| [Julia](/software/Julia) | X | - | - | - | 
+| [Matlab](/software/Matlab) | X | - | - | - | 
+| [PALM](/software/PALM) | X | - | - | - | 
+| [Python](/software/Python) | X | - | - | - | 
+| [PyTorch](/software/PyTorch) | X | - | - | - | 
+| [R](/software/R) | X | - | - | - | 
+| [SLEAP](/software/SLEAP) | X | - | - | - |
+| [SUMO](/software/SUMO) | X | - | - | - | 
 
 ## Getting Started
 
@@ -26,8 +27,8 @@ If you are new to CHTC, we recommend going through these guides to orient yourse
 
 ### HTC (job submission with HTCondor)
 
-- [Software Overview]()
-- [Container Hello World]()
+- [Software Overview]() (*coming soon!*)
+- [Container Hello World]() (*coming soon!*)
 
 In general, for the HTC system, we recommend using containers (Docker or Apptainer)
 when possible, with local installs as an alternative. 
