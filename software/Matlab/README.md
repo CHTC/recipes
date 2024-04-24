@@ -3,6 +3,7 @@
 Definition files for installing Matlab and Matlab Toolboxes in a container environment.
 
 * [Base Matlab container](./base-matlab)
+* [Matlab with Compiler](./mcc-compiler)
 * [Matlab with Symbolic Math Toolbox](./symbolic-math)
 
 The definition files will also setup Matlab to connect to the CHTC license server.
