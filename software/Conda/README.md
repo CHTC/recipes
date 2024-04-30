@@ -29,4 +29,4 @@ Remember that containers on CHTC are executed read-only; any installation comman
 For non-interactive HTCondor jobs, you do not need to activate an environment to use the conda packages, nor should you try.
 This means that your executable can be a `.sh` or `.py` or script file, so long as their is a proper shebang (the first line, starting with `#!`).
 
-For interactive HTCondor jobs, you will need to first run `condor activate` in order to use the conda packages.
+For interactive HTCondor jobs, you will need to first run `conda activate` in order to use the conda packages.
