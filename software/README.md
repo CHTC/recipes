@@ -13,7 +13,7 @@ context for using the installation recipes and templates in this folder.
 | [Alphafold](/software/AlphaFold) | X | - | - | - | 
 | [Conda](/software/Conda) | X | - | - | - | 
 | [Julia](/software/Julia) | X | - | - | - | 
-| [Matlab](/software/Matlab) | X | - | - | - | 
+| [Matlab](/software/Matlab) | X | X | - | - | 
 | [PALM](/software/PALM) | X | - | - | - | 
 | [Python](/software/Python) | X | - | - | - | 
 | [PyTorch](/software/PyTorch) | X | - | - | - | 
