@@ -18,3 +18,14 @@ If you do not need any additional toolboxes, see the [base-matlab](../base-matla
 | *Updated* | 2024-04-09 | *Andrew Owen* |
 | *Last tested on HTC* | 2024-04-09 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
+
+## [Dockerfile](Dockerfile)
+
+| | | |
+| ---: | :--- | :--- |
+| *Type* | **Docker** | |
+| *OS* | Ubuntu 22.04 | |
+| *Base image* | **mathworks/matlab-deps:r2022b** | *DockerHub* |
+| *Updated* | 2024-05-07 | *Andrew Owen* |
+| *Last tested on HTC* | 2024-05-06 | *Andrew Owen* |
+| *Last tested on HPC* | - | - |
