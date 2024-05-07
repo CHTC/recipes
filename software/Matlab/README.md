@@ -33,10 +33,10 @@ There are two things you need to edit in the definition file to choose the versi
 2. Set `MATLAB_RELEASE` in the "Quick Settings" section
 
    In the "Quick Settings" section of the definition file, change the value of `MATLAB_RELEASE` to the version that you are using.
-   The syntax is `export MATLAB_RELEASE=<Matlab version>` where you need to replace `<Matlab version>` with the one you are using. 
+   The syntax is `MATLAB_RELEASE=<Matlab version>` where you need to replace `<Matlab version>` with the one you are using. 
    This version needs to match the version specified in the `From` line, but does not include the operating system.
 
 ## Installing Toolboxes
 
 The toolboxes/features to install are defined using the variable `MATLAB_PRODUCT_LIST` in the "Quick Settings" section of the definition file.
-The syntax for defining the product list is `"MATLAB Toolbox1 Toolbox2"` and so on, where you must include `MATLAB` and where the toolboxes are taken from [chtc_licensed_toolboxes.txt](./chtc_licensed_toolboxes.txt).
+The syntax for defining the product list is `MATLAB_PRODUCT_LIST="MATLAB Toolbox1 Toolbox2"` and so on, where you must include `MATLAB` and where the toolboxes are taken from [chtc_licensed_toolboxes.txt](./chtc_licensed_toolboxes.txt).
