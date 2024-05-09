@@ -50,3 +50,23 @@ For HTC jobs, you should add these lines to the top of your executable `.sh` fil
 
 ## [conda-env-yaml.def](conda-env-yaml.def)
 
+| | | |
+| ---: | :--- | :--- |
+| *Type* | **Apptainer** | |
+| *OS* | Debian "bullseye" | |
+| *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
+| *Updated* | 2024-05-19 | *Andrew Owen* |
+| *Last tested on HTC* | 2024-05-19 | *Andrew Owen* |
+| *Last tested on HPC* | - | - |
+
+## [Dockerfile](Dockerfile)
+
+| | | |
+| ---: | :--- | :--- |
+| *Type* | **Apptainer** | |
+| *OS* | Debian "bullseye" | |
+| *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
+| *Updated* | 2024-05-19 | *Andrew Owen* |
+| *Last tested on HTC* | 2024-05-19 | *Andrew Owen* |
+| *Last tested on HPC* | - | - |
+
