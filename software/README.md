@@ -15,7 +15,7 @@ context for using the installation recipes and templates in this folder.
 | [Julia](/software/Julia) | X | - | - | - | 
 | [Matlab](/software/Matlab) | X | X | - | - | 
 | [PALM](/software/PALM) | X | - | - | - | 
-| [Python](/software/Python) | X | - | - | - | 
+| [Python](/software/Python) | X | X | - | - | 
 | [PyTorch](/software/PyTorch) | X | - | - | - | 
 | [R](/software/R) | X | - | - | - | 
 | [SLEAP](/software/SLEAP) | X | - | - | - |

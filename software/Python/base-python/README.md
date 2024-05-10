@@ -5,6 +5,14 @@ environment.
 
 If you are planning to use numpy or scipy packages, consider our recipes for [numpy](../numpy) or [scipy](../scipy).
 
+## Build Notes
+
+When building, change `cowsay` and `tqdm` to whatever packages you want to install.
+
+See the [python DockerHub page](https://hub.docker.com/_/python/tags) to see 
+which versions of Python and operating systems are available and adjust the 
+"from" line of the definition file accordingly.
+
 ## [base-python.def](base-python.def)
 
 | | | |
@@ -16,10 +24,13 @@ If you are planning to use numpy or scipy packages, consider our recipes for [nu
 | *Last tested on HTC* | 2024-03-06 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
-### Build Notes
+## [Dockerfile](Dockerfile)
 
-When building, change `cowsay` and `tqdm` to whatever packages you want to install.
-
-See the [python DockerHub page](https://hub.docker.com/_/python/tags) to see 
-which versions of Python and operating systems are available and adjust the 
-`From:` line of the definition file accordingly.
+| | | |
+| ---: | :--- | :--- |
+| *Type* | **Docker** | |
+| *OS* | Debian GNU/Linux 12 (bookworm) | |
+| *Base image* | **python:3.11** | *DockerHub* |
+| *Updated* | 2024-05-10 | *Andrew Owen* |
+| *Last tested on HTC* | - | - |
+| *Last tested on HPC* | - | - |

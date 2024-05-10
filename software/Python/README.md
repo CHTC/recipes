@@ -35,7 +35,7 @@ python3 -m pip install package1==1.0 package2==3.2.1 package3
 ## Choosing the version of python
 
 These recipes are based on the official Python container images on DockerHub: https://hub.docker.com/_/python. 
-Generally, you can edit the `From:` line of the definition file to specify the version you want to use.
+Generally, you can edit the "from" line of the definition file to specify the version you want to use.
 For example, using
 
 ```
