@@ -55,8 +55,8 @@ For HTC jobs, you should add these lines to the top of your executable `.sh` fil
 | *Type* | **Apptainer** | |
 | *OS* | Debian "bullseye" | |
 | *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
-| *Updated* | 2024-05-19 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-05-19 | *Andrew Owen* |
+| *Updated* | 2024-05-09 | *Andrew Owen* |
+| *Last tested on HTC* | 2024-05-09 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
 ## [Dockerfile](Dockerfile)
@@ -66,7 +66,7 @@ For HTC jobs, you should add these lines to the top of your executable `.sh` fil
 | *Type* | **Apptainer** | |
 | *OS* | Debian "bullseye" | |
 | *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
-| *Updated* | 2024-05-19 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-05-19 | *Andrew Owen* |
+| *Updated* | 2024-05-09 | *Andrew Owen* |
+| *Last tested on HTC* | 2024-05-09 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
