@@ -3,7 +3,7 @@
 Recipes for software installed using [Conda](https://docs.conda.io/en/latest/).
 
 - [Adding packages to base conda](base-conda)
-- [Installing packages using a requirements file](conda-requirements)
+- [Installing packages using a environment.yaml file](conda-env-yaml)
 - [Installing PyTorch using conda](conda-pytorch)
 
 These containers are based on the official Miniconda containers provided on [DockerHub](https://hub.docker.com/r/continuumio/miniconda3).
@@ -26,7 +26,9 @@ Remember that containers on CHTC are executed read-only; any installation comman
 
 ## Using the containers
 
-For non-interactive HTCondor jobs, you do not need to activate an environment to use the conda packages, nor should you try.
+For non-interactive HTCondor jobs, you do not need to activate an environment to use the conda packages.
 This means that your executable can be a `.sh` or `.py` or script file, so long as their is a proper shebang (the first line, starting with `#!`).
+If, however, you created an environment when building the container (as in the [recipe using the environment.yaml file](conda-env-yaml)), 
+you will need to run the command `source activate` before trying to activate the environment.
 
-For interactive HTCondor jobs, you will need to first run `conda activate` in order to use the conda packages.
+For interactive HTCondor jobs, you may need to first run `conda activate` in order to use the conda packages.

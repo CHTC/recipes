@@ -11,7 +11,7 @@ context for using the installation recipes and templates in this folder.
 | Software Name | Apptainer | Docker | Local Install | HPC Spack | 
 | :--- | :---: | :---: | :---: | :---: |
 | [Alphafold](/software/AlphaFold) | X | - | - | - | 
-| [Conda](/software/Conda) | X | - | - | - | 
+| [Conda](/software/Conda) | X | X | - | - | 
 | [Julia](/software/Julia) | X | - | - | - | 
 | [Matlab](/software/Matlab) | X | X | - | - | 
 | [PALM](/software/PALM) | X | - | - | - | 
