@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: continuumio/miniconda3:latest
+
+%post
+    # enable conda features
+    . activate
+
+    # create the first environment
+    conda create -y -n my-first-env python=3.10
+    conda activate my-first-env
+    conda install -y numpy pandas
+    conda deactivate
+
+    # create the second environment
+    conda create -y -n my-second-env python=3.6
+    conda activate my-second-env
+    conda install -y numpy scipy
+    conda deactivate
