@@ -1,0 +1,28 @@
+bootstrap:docker
+from:ubuntu:latest
+
+%files
+
+        vasp.6.3.0.tgz /opt
+	makefile.include /opt
+
+%post
+
+        export DEBIAN_FRONTEND=noninteractive
+
+        # Update packages
+        apt update -y
+        apt upgrade -y
+	apt install rsync make build-essential g++ gfortran libopenblas-dev libopenmpi-dev libscalapack-openmpi-dev libfftw3-dev libhdf5-openmpi-dev -y
+
+        # Install VASP
+	cd /opt/
+        tar xvf vasp.6.3.0.tgz --no-same-owner
+	mv /opt/makefile.include vasp.6.3.0/makefile.include
+	cd vasp.6.3.0
+	make DEPS=1 -j
+ 
+%environment
+
+        # Include compiled tool in enronment variable PATH
+        export PATH=/opt/vasp.6.3.0/bin/:$PATH
