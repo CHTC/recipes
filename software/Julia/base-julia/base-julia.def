@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: julia:1.11
+From: julia:1.10
 
 %post
         export JULIA_DEPOT_PATH="/usr/local/share/julia"
