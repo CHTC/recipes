@@ -3,11 +3,9 @@ From: julia:1.10
 
 %post
         export JULIA_DEPOT_PATH="/usr/local/share/julia"
-        export JULIA_PROJECT="/opt/julia"
 
         # Install your packages using the following command:
         julia -e 'using Pkg; Pkg.add("Cowsay"); Pkg.instantiate(); Pkg.precompile()'
 
 %environment
-        export JULIA_DEPOT_PATH="/usr/local/share/julia"
-        export JULIA_PROJECT="/opt/julia"
+        export JULIA_DEPOT_PATH="/tmp/:/usr/local/share/julia"
