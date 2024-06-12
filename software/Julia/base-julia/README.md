@@ -25,8 +25,8 @@ Container definition files for building Julia packages in a base Julia environme
 | *Type* | **Apptainer** | |
 | *OS* | Debian "bookworm" | |
 | *Base image* | **julia:1.10** | *[DockerHub](https://hub.docker.com/layers/library/julia/1.10.2-bookworm/images/sha256-9e937d5a591b59f2680e7c5d665bf96ad80029034f22638564ae59ad52b472b6?context=explore)* |
-| *Updated* | 2024-04-12 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-04-12 | *Andrew Owen* |
+| *Updated* | 2024-06-12 | *Andrew Owen* |
+| *Last tested on HTC* | 2024-06-12 | *Amber Lim* |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
