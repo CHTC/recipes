@@ -55,4 +55,10 @@ There are two things you need to edit in the definition file to choose the versi
 ## Installing Toolboxes
 
 The toolboxes/features to install are defined using the variable `MATLAB_PRODUCT_LIST` in the "Quick Settings" section of the definition file.
-The syntax for defining the product list is `MATLAB_PRODUCT_LIST="MATLAB Toolbox1 Toolbox2"` and so on, where you must include `MATLAB` and where the toolboxes are taken from [chtc_licensed_toolboxes.txt](./chtc_licensed_toolboxes.txt).
+The syntax for defining the product list is `MATLAB_PRODUCT_LIST="MATLAB Toolbox1 Toolbox2"` and so on, where you must include `MATLAB` and where the toolboxes are taken from [chtc_licensed_toolboxes.txt](./chtc_licensed_toolboxes.txt). 
+For a full list of toolboxes, go to a link like the following: [https://github.com/mathworks-ref-arch/matlab-dockerfile/blob/main/mpm-input-files/R2022b/mpm_input_r2022b.txt](https://github.com/mathworks-ref-arch/matlab-dockerfile/blob/main/mpm-input-files/R2022b/mpm_input_r2022b.txt). 
+(This specific link is for `R2022b`, but you can replace the version numbers in the link to get the list for other versions of Matlab.)
+
+> The list of toolboxes in [chtc_licensed_toolboxes.txt](./chtc_licensed_toolboxes.txt) is not all-inclusive.
+> That is, there may be toolboxes in the full list above available for use because they are included the base license of Matlab.
+> For example, the `Parallel_Computing_Toolbox` is in the full list and not in the CHTC licensed list, but is still functional.
