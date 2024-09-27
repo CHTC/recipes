@@ -31,6 +31,6 @@ Program overview: https://sleap.ai/index.html
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu | |
 | *Base image* | **condaforge/miniforge3:latest** | *DockerHub* |
-| *Updated* | 2024-02-23 | *Andrew Owen* |
-| *Last tested on HTC* | - | - |
+| *Updated* | 2024-09-27 | *Amber Lim* |
+| *Last tested on HTC* | 2024-09-23 | *Amber Lim* |
 | *Last tested on HPC* | - | - |
