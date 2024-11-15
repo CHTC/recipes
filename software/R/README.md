@@ -27,10 +27,24 @@ These containers are based on the [Rocker](https://rocker-project.org/) pre-buil
 For more information about Rocker and the containers they provide, 
 see [here](https://rocker-project.org/images/).
 
+## Choosing the version of R
+
+These recipes are based on the Rocker container images on DockerHub: https://hub.docker.com/u/rocker.
+Generally, you can change the "tag" in the `From` line to specify the version of R that you want to use.
+For example,
+
+```
+# Apptainer .def file
+From: rocker/r-ver:4.1
+# Dockerfile
+FROM rocker/r-ver:4.1
+```
+
+will build the container using the `r-ver` container with R version 4.1.
+
 ## How to install packages
 
-There are two ways that you can pass the `R` commands in the `%post` section
-of the definition file.
+There are two ways that you can pass the `R` commands in the container build file.
 You may encounter either approach in the container recipe files here.
 
 ### 1. Single line command
@@ -67,28 +81,16 @@ EOF
     Rscript install.R
 ```
 
-The lines between `cat << EOF` and `EOF` will be written to `install.R`, which you
-can then execute using `Rscript`.
+(and similarly for Dockerfiles).
 
-> Note that the second `EOF` must be at the beginning of the line.
+The lines between `cat << EOF` and `EOF` will be written to `install.R`, 
+which will then be executed using `Rscript`.
 
-## Choosing the version of R
-
-These recipes are based on the Rocker container images on DockerHub: https://hub.docker.com/u/rocker.
-Generally, you can change the "tag" in the `From` line to specify the version of R that you want to use.
-For example,
-
-```
-# Apptainer .def file
-From: rocker/r-ver:4.1
-# Dockerfile
-FROM rocker/r-ver:4.1
-```
-
-will build the container using the `r-ver` container with R version 4.1.
+> Note that the second `EOF` must not have any characters before or after it on the same line!
 
 ## Using a different base operating system
 
 The base operating system for the Rocker containers is Debian Linux. 
 If you want to use a different operating system, you can install R using Conda. 
-See our [Conda recipes](/software/Conda) and follow the instructions [here](https://docs.anaconda.com/free/working-with-conda/packages/using-r-language/).
+See our [Conda recipes](/software/Conda) and follow the instructions 
+[here](https://docs.anaconda.com/free/working-with-conda/packages/using-r-language/).
