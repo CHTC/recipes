@@ -29,6 +29,8 @@ To submit a with Gurobi, users will need to add the following requirement to the
 requirements = (HasCHTCSoftware == true)
 ```
 
+**This will not work if you have not been approved to use Gurobi on CHTC!**
+
 **By using these definition files, you are agreeing to the terms and conditions for the use of Gurobi as licensed by CHTC, for use at CHTC.**
 
 ## [gurobi.def](gurobi.def)
