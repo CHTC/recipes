@@ -16,7 +16,7 @@
 
 # [renv](/software/R/renv)
 
-Container definition files for reproducing an R environment using the (renv package)[https://rstudio.github.io/renv/]. 
+Container definition files for reproducing an R environment using the [renv package](https://rstudio.github.io/renv/). 
 
 ## Obtain necessary files
 
