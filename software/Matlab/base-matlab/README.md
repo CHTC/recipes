@@ -31,8 +31,8 @@ If you want to install additional toolboxes, see the example that installs the S
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu 22.04 | |
 | *Base image* | **mathworks/matlab-deps:r2022b** | *DockerHub* |
-| *Updated* | 2024-04-09 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-04-09 | *Andrew Owen* |
+| *Updated* | 2025-01-16 | *Amber Lim* |
+| *Last tested on HTC* | 2025-01-16 | *Amber Lim* |
 | *Last tested on HPC* | - | - |
 
 ## [Dockerfile](Dockerfile)
