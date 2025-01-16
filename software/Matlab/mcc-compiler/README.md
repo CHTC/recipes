@@ -34,7 +34,7 @@ If you want to install additional toolboxes, append them to the end of the value
 | *OS* | Ubuntu 22.04 | |
 | *Base image* | **mathworks/matlab-deps:r2022b** | *DockerHub* |
 | *Updated* | 2025-01-16 | *Amber Lim* |
-| *Last tested on HTC* | 2025-01-16 | *Amber Lim* |
+| *Last tested on HTC* | 2024-04-11 | *Andrew Owen* |
 | *Last tested on HPC* | - | - |
 
 ## [Dockerfile](Dockerfile)
