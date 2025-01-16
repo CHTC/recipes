@@ -31,6 +31,7 @@ export MATLAB_PRODUCT_LIST=$MATLAB_PRODUCT_LIST
 export MATLAB_INSTALL_LOCATION=$MATLAB_INSTALL_LOCATION
 EOF
 
+    chmod 777 /tmp
     apt-get update -y
     apt-get install -y --no-install-recommends \
         bzip2 \
