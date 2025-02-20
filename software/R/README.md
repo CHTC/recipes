@@ -22,6 +22,7 @@ by specialty.
 - [Adding packages to base R](base-r)
 - [Using tidyverse with additional packages](tidyverse)
 - [Using R geospatial packages](geospatial)
+- [Using `renv` to replicate environment](renv)
 
 These containers are based on the [Rocker](https://rocker-project.org/) pre-built containers. 
 For more information about Rocker and the containers they provide, 

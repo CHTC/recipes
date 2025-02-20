@@ -1,0 +1,38 @@
+Bootstrap: docker
+From: rocker/r-ver:4.4.2
+
+# Make sure the version above matches the version of R you used to generate the renv.lock file!
+
+# DO NOT EDIT THE FOLLOWING (unless you know what you are doing..)
+
+%files
+    # Copying over necessary files into the correct locations
+
+    # Contains your package names and versions
+    renv.lock /opt/renv.lock
+
+    # These files are needed by renv
+    activate.R /opt/renv/activate.R
+    settings.json /opt/renv/settings.json
+
+%post
+    # Adjusting settings for renv to work correctly in the container
+    export RENV_PATHS_LIBRARY='/opt/renv/library'
+    export RENV_PROJECT='/opt'
+    # (This disables an unhelpful warning message)
+    export RENV_CONFIG_SYNCHRONIZED_CHECK=false
+
+    # This makes sure that renv is loaded whenever you use R/Rscript
+    echo "source('/opt/renv/activate.R')" >> /usr/local/lib/R/etc/Rprofile.site
+
+    # Move to the directory with the renv.lock file
+    cd /opt
+    # Then just need to install packages listed in the lock file using the restore command
+    R -e "renv::restore()"
+
+%environment
+    # These settings need to be set for the runtime as well.
+    export RENV_PATHS_LIBRARY='/opt/renv/library'
+    export RENV_PROJECT='/opt'
+    # (This disables an unhelpful warning message)
+    export RENV_CONFIG_SYNCHRONIZED_CHECK=false
