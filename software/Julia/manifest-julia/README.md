@@ -14,11 +14,11 @@
    limitations under the License.
 -->
 
-# [base-julia](/software/Julia/base-julia)
+# [base-julia](/software/Julia/manifest-julia)
 
-Container definition files for building Julia packages in a base Julia environment. 
+Container definition files for building Julia packages in a base Julia environment using existing `Project.toml` and `Manifest.toml` files.
 
-## [base-julia.def](base-julia.def)
+## [manifest-julia.def](manifest-julia.def)
 
 | | | |
 | ---: | :--- | :--- |
@@ -31,7 +31,9 @@ Container definition files for building Julia packages in a base Julia environme
 
 ### Build Notes
 
-When building, change `Cowsay` to whatever package you want to install.
+You will need to transfer your existing `Project.toml` and `Manifest.toml` files in your submit file for the build job.
+
+Make sure that the version numbers in the `%files` section are consistent with the version you select in the `From:` line.
 
 When testing, use the `-C` flag to avoid a read-only system error that occurs when using the `apptainer shell` command. These errors do not propagate into jobs using the Julia container. i.e., use `apptainer shell -C julia.sif`.
 

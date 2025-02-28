@@ -8,4 +8,4 @@ From: julia:1.10
         julia -e 'using Pkg; Pkg.add(["Cowsay", "DataFrames"]); Pkg.instantiate(); Pkg.precompile()'
 
 %environment
-        export JULIA_DEPOT_PATH="/tmp/:/opt/julia"
+        export JULIA_DEPOT_PATH=":/opt/julia"
