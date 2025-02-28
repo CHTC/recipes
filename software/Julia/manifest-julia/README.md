@@ -33,5 +33,7 @@ Container definition files for building Julia packages in a base Julia environme
 
 You will need to transfer your existing `Project.toml` and `Manifest.toml` files in your submit file for the build job.
 
+Make sure that the version numbers in the `%files` section are consistent with the version you select in the `From:` line.
+
 When testing, use the `-C` flag to avoid a read-only system error that occurs when using the `apptainer shell` command. These errors do not propagate into jobs using the Julia container. i.e., use `apptainer shell -C julia.sif`.
 
