@@ -25,11 +25,13 @@ Container definition files for building Julia packages in a base Julia environme
 | *Type* | **Apptainer** | |
 | *OS* | Debian "bookworm" | |
 | *Base image* | **julia:1.10** | *[DockerHub](https://hub.docker.com/layers/library/julia/1.10.2-bookworm/images/sha256-9e937d5a591b59f2680e7c5d665bf96ad80029034f22638564ae59ad52b472b6?context=explore)* |
-| *Updated* | 2024-04-12 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-04-12 | *Andrew Owen* |
+| *Updated* | 2025-02-28 | *Amber Lim* |
+| *Last tested on HTC* | 2025-02-28 | *Amber Lim* |
 | *Last tested on HPC* | - | - |
 
 ### Build Notes
 
-When building, change `Cowsay` to whatever package you want to install. 
+When building, change `Cowsay` to whatever package you want to install.
+
+When testing, use the `-C` flag to avoid a read-only system error that occurs when using the `apptainer shell` command. These errors do not propagate into jobs using the Julia container. i.e., use `apptainer shell -C julia.sif`.
 
