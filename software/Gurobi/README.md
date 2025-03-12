@@ -21,7 +21,7 @@ Program overview: https://www.gurobi.com/solutions/gurobi-optimizer/
 
 Refer to CHTC documentation building [Apptainer container images](https://chtc.cs.wisc.edu/uw-research-computing/apptainer-htc.html) or [Docker container images](https://chtc.cs.wisc.edu/uw-research-computing/docker-build).
 
-CHTC users will need to be on the approved users list for Gurobi to access the license.
+> ***CHTC users will need to be on the approved users list for Gurobi to access the license!***
 
 ## Using the Gurobi container in a job
 To submit a with Gurobi, users will need to add the following requirement to their submit file:
