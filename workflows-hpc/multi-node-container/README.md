@@ -19,7 +19,26 @@ CHTC's HPC system.
 > * [multi-node.def](multi-node.def) - *Apptainer definition file*
 >
 
-First, you need to build the container customized for your software deployment.
+To build a container customized for your software deployment, you'll need to provide
+instructions in the definition file.
+
+### Structure of the definition file
+
+The provided definition file takes advantage of Apptainer's "multi-stage build".
+In this case, there are two stages: build and final. 
+
+In the build stage, the official Spack container is used to install OpenMPI
+and its dependencies as necessary for running on the CHTC's HPC system.
+Once OpenMPI is compiled, there is no longer any need for Spack.
+
+In the final stage, the compiled OpenMPI is copied into a fresh Ubuntu 22.04
+container.
+OS packages necessary for OpenMPI are installed, and the user has the opportunity
+to provide further installation commands for their particular software, 
+which can be compiled using OpenMPI. 
+
+The final, resulting container image file will not contain Spack or any of its
+dependencies beyond what is necessary to run OpenMPI and its dependencies.
 
 ### Customize the definition file
 
@@ -33,11 +52,49 @@ across multiple nodes.
 There are several ways you can customize the definition file to build the
 container you want.
 
-#### Install packages using `apt`
+#### Install packages using the OS package manager
+
+The `apt` package manager is used to install OS libraries in both the build and
+the final stage within the definition file.
+You can add additional libraries to these lists. 
+
+Using the OS package manager is recommended when you need access to the header
+files of libraries for compiling additional programs.
+
+It is recommended to duplicate the full list of `apt` packages in both stages
+of the definition file.
+While this may not be necessary, it ensures that OpenMPI is compiled in a 
+similar environment as the software installed in the final stage.
 
 #### Install packages using Spack
 
+The `spack` package manager is used to install OpenMPI and the necessary dependencies
+for running on CHTC's HPC system. 
+It can also be used to easily install other programs available throught the Spack ecosystem.
+To add packages for Spack to install, you'll need to modify the `spack: specs:` section. 
+For more information on package "specs", see our guide [Install Software Using Spack](https://chtc.cs.wisc.edu/uw-research-computing/hpc-spack-install#d-adding-package-specifications-to-the-environment).
+
+Using Spack is recommended for installing large programs with many dependencies,
+or programs with complicated installation process.
+It is not recommended if you need access to the header files for compiling additional programs.
+
 #### Manually compile programs
+
+Towards the end of the final stage in the definition file is a section for 
+manually compiling your programs.
+Add the Linux commands for compiling your programs here,
+and as long as the necessary dependencies are present and the commands are
+noninteractive (do not have prompts to the user), 
+they should work.
+
+Manually compiling programs is recommended for installing programs from GitHub
+or other sources. 
+For complex programs, consider seeing if there is a corresponding Spack package.
+
+Manually compiled programs should be installed into the `/opt` directory in the container.
+If your program(s) require environment modifications, it is recommended to 
+append the relevant commands to the `/etc/bashrc` file.
+Then in your executable script, begin with sourcing said file to apply the environment modifications.
 
 ### Build the container
 
