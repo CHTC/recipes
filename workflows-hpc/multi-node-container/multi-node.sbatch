@@ -19,6 +19,12 @@
 #SBATCH -o multi-node-container.out
 #SBATCH -e multi-node-container.err
 
+# Update these paths to your desired locations
+container_path="/home/$USER/containers/multi-node.sif"
+executable_path="${PWD}/multi-node.sh"
+# Make sure that "executable_path" is located in one of the
+# "--bind" directories listed below!
+
 # Set up for container execution:
 
 # If single node, use
@@ -26,6 +32,8 @@
 
 # If multi-node, use
 export TMPDIR=/scratch/$USER/apptainer_tmp/${SLURM_JOB_ID}
+
+# You shouldn't need to edit any of the following >>>
 
 # Make corresponding temp directory
 mkdir -p $TMPDIR
@@ -41,7 +49,7 @@ srun --mpi=pmix --export=NONE \
     --bind $TMPDIR \
     --bind $PWD \
     -W $PWD \
-    multi-node.sif $PWD/multi-node.sh
+    $container_path $executable_path
 
 # Clean up the temp directory
 rm -rf $TMPDIR
