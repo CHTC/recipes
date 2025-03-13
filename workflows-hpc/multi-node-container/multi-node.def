@@ -1,0 +1,100 @@
+Bootstrap: docker
+From: spack/ubuntu-jammy:0.23
+Stage: build
+
+%post
+    apt update -y
+    apt install -y \
+        cmake \
+        curl \
+        git \
+        less \
+        make \
+        nano \
+        libucx-dev \
+        vim \
+        wget
+        # And any other libraries you want installed.
+        # * Make sure to include a trailing backslash for all but the last line.
+        # * Make sure the install list in the "Stage: final" section matches this.
+
+# DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING >>>
+    # Create the manifest file for the installation in /opt/spack-environment
+    # Can add other packages to the "specs" section, but header (lib___-dev) packages should
+    # be installed using the OS package manager above.
+    mkdir /opt/spack-environment && cd /opt/spack-environment
+    cat << EOF > spack.yaml
+spack:
+  specs:
+  - openmpi fabrics=ucx +pmi +legacylaunchers
+  - libfabric fabrics=sockets,ucx,mlx
+
+  concretizer:
+    unify: true
+  config:
+    install_tree: /opt/software
+  view: /opt/view
+EOF
+
+    # Install all the required software
+    . /opt/spack/share/spack/setup-env.sh
+    spack external find --exclude perl --exclude openssh --exclude openssl
+    spack -e . concretize
+    spack -e . install
+    spack gc -y
+    spack env activate --sh -d . >> /opt/spack-environment/environment_modifications.sh
+
+    # Strip the binaries to reduce the size of the image
+    find -L /opt/view/* -type f -exec readlink -f '{}' \; | \
+        xargs file -i | \
+        grep 'charset=binary' | \
+        grep 'x-executable\|x-archive\|x-sharedlib' | \
+        awk -F: '{print $1}' | xargs strip
+
+Bootstrap: docker
+From: ubuntu:22.04 
+Stage: final
+
+%files from build
+    /opt/spack-environment /opt
+    /opt/software /opt
+    /opt/._view /opt
+    /opt/view /opt
+    /opt/spack-environment/environment_modifications.sh /opt/spack-environment/environment_modifications.sh
+
+%post
+    apt update -y 
+# <<< DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
+
+    apt install -y \
+        cmake \
+        curl \
+        git \
+        less \
+        make \
+        nano \
+        libucx-dev \
+        vim \
+        wget
+        # And any other libraries you want installed.
+        # * Make sure to include a trailing backslahs for all but the last line.
+        # * Make sure the install list in the "Stage: final" section matches this.
+
+    # Activate Spack to use the MPI packages during your program installation; do not remove!
+    . /opt/spack-environment/environment_modifications.sh
+
+# ALL OF YOUR PROGRAM INSTALLATION COMMANDS GO HERE >>>
+
+# <<< ALL OF YOUR PROGRAM INSTALLATION COMMANDS GO HERE
+
+    # If there are files that need to be sourced at startup, recommend adding to /etc/bashrc
+    # 
+    # Example:
+    #   echo '. /opt/my_program/etc/bashrc' >> /etc/bashrc
+    # 
+    # Then in your main script for launching the progam, make sure ". /etc/bashrc" is at the 
+    # beginnning.
+
+    # This makes sure Spack packages are available to use at run time; do not remove!
+    cat /opt/spack-environment/environment_modifications.sh >> $APPTAINER_ENVIRONMENT
+
