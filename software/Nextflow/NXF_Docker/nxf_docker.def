@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: nextflow/nextflow:24.04.5
+
+%post
+    # Install "unprivileged" Apptainer as per
+    # https://apptainer.org/docs/admin/1.4/installation.html#install-unprivileged-from-pre-built-binaries
+    yum install -y cpio
+    mkdir -p /opt/apptainer
+    curl -s https://raw.githubusercontent.com/apptainer/apptainer/main/tools/install-unprivileged.sh | \
+        bash -s - /opt/apptainer
+
+    # Removing unnecessary directory (correct directory created by nxf_docker.sh script)
+    rm -r /.nextflow
+
+%environment
+    export PATH="/opt/apptainer/bin:$PATH"
