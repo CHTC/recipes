@@ -1,0 +1,45 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%post -c /bin/bash
+    apt update -y
+    apt install -y \
+        bash \
+        cpio \
+        curl \
+        git \
+        nano \
+        rpm2cpio \
+        tar \
+        unzip \
+        vim \
+        wget \
+        zip
+
+    # Install "unprivileged" Apptainer as per
+    # https://apptainer.org/docs/admin/1.4/installation.html#install-unprivileged-from-pre-built-binaries
+    mkdir -p /opt/apptainer
+    curl -s https://raw.githubusercontent.com/apptainer/apptainer/main/tools/install-unprivileged.sh | \
+        bash -s - /opt/apptainer
+
+    # Install SDKMAN as per
+    # https://sdkman.io/install
+    # (prerequisite for Java)
+    export SDKMAN_DIR="/opt/sdkman/" && curl -s "https://get.sdkman.io?ci=true&rcupdate=false" | bash
+    source $SDKMAN_DIR/bin/sdkman-init.sh
+
+    # Install Java as per Nextflow instructions
+    # (prerequisite for Nextflow)
+    sdk install java 17.0.10-tem
+
+    # Install Nextflow as per
+    # https://www.nextflow.io/docs/latest/install.html#self-install
+    mkdir -p /opt/nextflow
+    cd /opt/nextflow
+    curl -s https://get.nextflow.io | bash
+    chmod +x nextflow
+
+%environment
+    export JAVA_HOME=/opt/sdkman/candidates/java/current
+    export SDKMAN_DIR=/opt/sdkman
+    export PATH="/opt/nextflow:/opt/apptainer/bin:/opt/sdkman/candidates/java/current/bin:$PATH"
