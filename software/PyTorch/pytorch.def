@@ -1,0 +1,6 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:25.02-py3
+
+%post
+    # Install python packages
+    python3 -m pip install pandas
