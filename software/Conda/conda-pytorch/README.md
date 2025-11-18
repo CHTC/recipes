@@ -22,9 +22,11 @@ This recipe is especially useful for
 * installing older versions of PyTorch, which may not have official containers on DockerHub
 * installing PyTorch in combination with other conda packages
 
-## Build Notes
+## Choosing a CUDA Version
 
-Installation command taken from the [PyTorch website](https://pytorch.org/get-started/locally/) using the options "Stable, Linux, Conda, Python, CUDA 12.1".
+* Our recipes use CUDA 12.9, since they are compatible with most of our GPU machines.
+* You may consider using CUDA 13 instead. However, note that they will not be backwards compatible with older machines. We recommend using `gpus_minimum_capability = 8.0` in your HTCondor submit files when using jobs with containers with CUDA 13.
+
 
 ## [conda-pytorch.def](conda-pytorch.def)
 
