@@ -20,7 +20,7 @@ Container definition files for using the PyTorch program with NVIDIA CUDA librar
 
 Our recipes are based off of [NVIDIA's Pytorch containers](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch), which come prepackaged with many common python libraries, such as `scipy`, `numpy`, and `matplotlib`, and system packages like `git`, `wget`, `cmake`, and `vim`/`nano`.
 
-Conda's version of Pytorch is deprecated. You will no longer be able to use Conda to install Pytorch.
+To install Pytorch with conda, see our [conda-pytorch recipes](../Conda/conda-pytorch/).
 
 If you do not need to add any other packages, you can directly use NVIDIA's PyTorch containers in your jobs by adding the following line:
 
