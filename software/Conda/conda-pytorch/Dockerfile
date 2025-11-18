@@ -1,4 +1,3 @@
 FROM condaforge/miniforge3:25.3.0-3
 
-RUN conda install python=3.11
-RUN conda install -y pytorch torchvision torchaudio cuda-version=12.8 -c conda-forge -c nvidia
+RUN CONDA_OVERRIDE_CUDA=12.8 conda install --channel conda-forge pytorch-gpu torchvision torchaudio cuda-version=12.8
