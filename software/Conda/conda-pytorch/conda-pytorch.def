@@ -1,5 +1,7 @@
 Bootstrap: docker
-From: continuumio/miniconda3:latest
+From: condaforge/miniforge3:25.3.0-3
 
 %post
-    conda install -y pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+    # Need Python 3.11 or older to support conda-forge pytorch
+    conda install python=3.11
+    conda install -y pytorch torchvision torchaudio cuda-version=12.8 -c conda-forge -c nvidia

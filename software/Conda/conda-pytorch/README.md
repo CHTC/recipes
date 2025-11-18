@@ -31,10 +31,10 @@ Installation command taken from the [PyTorch website](https://pytorch.org/get-st
 | | | |
 | ---: | :--- | :--- |
 | *Type* | **Apptainer** | |
-| *OS* | Debian "bullseye" | |
-| *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
-| *Updated* | 2024-04-15 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-04-15 | *Andrew Owen* |
+| *OS* | Ubuntu 24.04.02 LTS | |
+| *Base image* | **condaforge/miniforge3:25.3.0-3** | *DockerHub* |
+| *Updated* | 2025-11-18 | *Amber Lim* |
+| *Last tested on HTC* | 2025-11-18 | *Amber lim* |
 | *Last tested on HPC* | - | - |
 
 ## [Dockerfile](Dockerfile)
@@ -42,8 +42,8 @@ Installation command taken from the [PyTorch website](https://pytorch.org/get-st
 | | | |
 | ---: | :--- | :--- |
 | *Type* | **Dockerfile** | |
-| *OS* | Debian "bullseye" | |
-| *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
-| *Updated* | 2024-05-10 | *Andrew Owen* |
+| *OS* | Ubuntu 24.04.02 LTS | |
+| *Base image* | **condaforge/miniforge3:25.3.0-3** | *DockerHub* |
+| *Updated* | 2025-11-18 | *Amber Lim* |
 | *Last tested on HTC* | - | - |
 | *Last tested on HPC* | - | - |
