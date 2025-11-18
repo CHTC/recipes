@@ -32,14 +32,14 @@ We welcome contributions and feedback! [See below](#contributions-and-feedback) 
 | :--- | :---: | :---: | :---: | :---: |
 | [Alphafold](/software/AlphaFold) | X | - | - | - | 
 | [Conda](/software/Conda) | X | X | - | - | 
-| [Julia](/software/Julia) | X | - | - | - | 
+| [Julia](/software/Julia) | X | X | - | - | 
 | [Matlab](/software/Matlab) | X | X | - | - | 
 | [PALM](/software/PALM) | X | - | - | - | 
 | [Python](/software/Python) | X | X | - | - | 
-| [PyTorch](/software/PyTorch) | X | - | - | - | 
-| [R](/software/R) | X | - | - | - | 
+| [PyTorch](/software/PyTorch) | X | X | - | - | 
+| [R](/software/R) | X | X | - | - | 
 | [SLEAP](/software/SLEAP) | X | - | - | - |
-| [SUMO](/software/SUMO) | X | - | - | - | 
+| [SUMO](/software/SUMO) | X | X | - | - | 
 
 ## Retrieving Repository Contents from CHTC
 
