@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: continuumio/miniconda3:latest
+From: condaforge/miniforge3:25.3.0-3
 
 %post
-    conda install -y pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+    CONDA_OVERRIDE_CUDA=12.9 conda install --channel conda-forge pytorch-gpu torchvision torchaudio cuda-version=12.9

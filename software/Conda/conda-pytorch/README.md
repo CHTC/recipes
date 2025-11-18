@@ -22,19 +22,21 @@ This recipe is especially useful for
 * installing older versions of PyTorch, which may not have official containers on DockerHub
 * installing PyTorch in combination with other conda packages
 
-## Build Notes
+## Choosing a CUDA Version
 
-Installation command taken from the [PyTorch website](https://pytorch.org/get-started/locally/) using the options "Stable, Linux, Conda, Python, CUDA 12.1".
+* Our recipes use CUDA 12.9, since they are compatible with most of our GPU machines.
+* You may consider using CUDA 13 instead. However, note that they will not be backwards compatible with older machines. We recommend using `gpus_minimum_capability = 8.0` in your HTCondor submit files when using jobs with containers with CUDA 13.
+
 
 ## [conda-pytorch.def](conda-pytorch.def)
 
 | | | |
 | ---: | :--- | :--- |
 | *Type* | **Apptainer** | |
-| *OS* | Debian "bullseye" | |
-| *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
-| *Updated* | 2024-04-15 | *Andrew Owen* |
-| *Last tested on HTC* | 2024-04-15 | *Andrew Owen* |
+| *OS* | Ubuntu 24.04.02 LTS | |
+| *Base image* | **condaforge/miniforge3:25.3.0-3** | *DockerHub* |
+| *Updated* | 2025-11-18 | *Amber Lim* |
+| *Last tested on HTC* | 2025-11-18 | *Amber lim, Matthew Feickert* |
 | *Last tested on HPC* | - | - |
 
 ## [Dockerfile](Dockerfile)
@@ -42,8 +44,8 @@ Installation command taken from the [PyTorch website](https://pytorch.org/get-st
 | | | |
 | ---: | :--- | :--- |
 | *Type* | **Dockerfile** | |
-| *OS* | Debian "bullseye" | |
-| *Base image* | **continuumio/miniconda3:latest** | *DockerHub* |
-| *Updated* | 2024-05-10 | *Andrew Owen* |
+| *OS* | Ubuntu 24.04.02 LTS | |
+| *Base image* | **condaforge/miniforge3:25.3.0-3** | *DockerHub* |
+| *Updated* | 2025-11-18 | *Amber Lim, Matthew Feickert* |
 | *Last tested on HTC* | - | - |
 | *Last tested on HPC* | - | - |

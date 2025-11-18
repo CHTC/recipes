@@ -1,3 +1,3 @@
-FROM continuumio/miniconda3:latest
+FROM condaforge/miniforge3:25.3.0-3
 
-RUN conda install -y pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+RUN CONDA_OVERRIDE_CUDA=12.9 conda install --channel conda-forge pytorch-gpu torchvision torchaudio cuda-version=12.9
