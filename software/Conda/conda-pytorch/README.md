@@ -36,7 +36,7 @@ This recipe is especially useful for
 | *OS* | Ubuntu 24.04.02 LTS | |
 | *Base image* | **condaforge/miniforge3:25.3.0-3** | *DockerHub* |
 | *Updated* | 2025-11-18 | *Amber Lim* |
-| *Last tested on HTC* | 2025-11-18 | *Amber lim* |
+| *Last tested on HTC* | 2025-11-18 | *Amber lim, Matthew Feickert* |
 | *Last tested on HPC* | - | - |
 
 ## [Dockerfile](Dockerfile)
@@ -46,6 +46,6 @@ This recipe is especially useful for
 | *Type* | **Dockerfile** | |
 | *OS* | Ubuntu 24.04.02 LTS | |
 | *Base image* | **condaforge/miniforge3:25.3.0-3** | *DockerHub* |
-| *Updated* | 2025-11-18 | *Amber Lim* |
+| *Updated* | 2025-11-18 | *Amber Lim, Matthew Feickert* |
 | *Last tested on HTC* | - | - |
 | *Last tested on HPC* | - | - |
