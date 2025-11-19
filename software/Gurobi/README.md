@@ -26,10 +26,13 @@ Refer to CHTC documentation building [Apptainer container images](https://chtc.c
 ## Using the Gurobi container in a job
 To submit a with Gurobi, users will need to add the following requirement to their submit file:
 ```
+concurrency_limits = GUROBI:1
 requirements = (HasCHTCSoftware == true)
 ```
 
 **This will not work if you have not been approved to use Gurobi on CHTC!**
+
+**Concurrency limits**: Some workflows and software check out multiple licenses for different processes (such as using the R bindings for Gurobi). Please be aware of your job’s behavior, and specify the correct number of licenses to the best of your ability.
 
 **By using these definition files, you are agreeing to the terms and conditions for the use of Gurobi as licensed by CHTC, for use at CHTC.**
 
