@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: nvidia/cuda:12.1.1-devel-ubuntu22.04
+
+# Base container taken from: https://hub.docker.com/r/nvidia/cuda/tags?page=1&name=12.1.1-devel
+
+%post
+	# Install Beagle instructions: https://github.com/beagle-dev/beagle-lib/wiki/LinuxInstallInstructions
+	
+	# Install dependencies
+	apt update -y
+	# apt install -y build-essential gcc cmake autoconf automake libtool subversion pkg-config git openjdk-11-jdk 
+	apt install -y cmake build-essential autoconf automake libtool git pkg-config openjdk-11-jdk
+	# Install Beagle
+	cd /opt
+	git clone --depth=1 https://github.com/beagle-dev/beagle-lib.git
+	cd beagle-lib
+	mkdir build
+	cd build
+	cmake -DBUILD_OPENCL=OFF ..
+	make install
+	
+	# Install Beast2
+	# Instructions: https://github.com/CompEvol/beast2/releases
+	apt install -y wget 
+	cd /opt
+	wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.6.Linux.x86.tgz
+	gzip -d BEAST.v2.7.6.Linux.x86.tgz
+	tar xvf BEAST.v2.7.6.Linux.x86.tar
+	
+%environment
+	export LD_LIBRARY_PATH=/opt/beagle-lib:$LD_LIBRARY_PATH
+	export PATH=/opt/beast/bin:$PATH
+	export PATH=$PATH:/opt/beagle-lib
