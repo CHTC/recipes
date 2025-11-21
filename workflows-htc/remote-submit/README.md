@@ -5,14 +5,14 @@
 You'll need to install the HTCondor Python bindings to your local device.
 This can generally be done by running
 
-```
+```bash
 python3 -m pip install htcondor
 ```
 
 Once installed, you should be able to run the following command to return the condor version.
 
-```
-python3 -c 'import htcondor ; print(htcondor.version())'
+```bash
+CONDOR_CONFIG=/dev/null python3 -c 'import htcondor2 as htcondor ; print(htcondor.version())'
 ```
 
 ## Setup
@@ -21,9 +21,9 @@ Before starting your Python session, you need to get an access token from the ac
 Run the following commands, 
 
 ```bash
-mkdir -p ./token
-ssh yourNetID@yourAccessPoint.chtc.wisc.edu condor_token_fetch > ./token/yourAccessPoint
-chmod 600 ./token/*
+mkdir -p ~/.condor/tokens.d
+ssh yourNetID@yourAccessPoint.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/yourAccessPoint
+chmod 600 ./.condor/tokens.d/*
 ```
 
 where `yourNetID` is replaced with **your** NetID, and `yourAccessPoint` is replaced with the name of **your** access point.
@@ -48,8 +48,38 @@ We recommend that you test these commands in the console before you try to imple
 At any time, you can turn on debugging with the python command
 
 ```python
+import htcondor2 as htcondor
+
 htcondor.enable_debug()
 ```
+
+### Importing htcondor
+
+To get the lastest version of the Python bindings, you'll need to import `htcondor2`.
+To support backwards compatibility on existing scripts, we recommend 
+
+```python
+import htcondor2 as htcondor
+```
+
+When you import `htcondor` (or `htcondor2`), it will automatically check for an HTCondor config file.
+If one doesn't exist, it will throw a warning.
+You can prevent this message by setting the environment variable `CONDOR_CONFIG=/dev/null`.
+(If you have a local condor config file, you can set that path instead.)
+
+To temporarily set the value when you launch Python, you can do
+
+```bash
+CONDOR_CONFIG=/dev/null python3
+```
+
+You can set the value for the current session with
+
+```bash
+export CONDOR_CONFIG=/dev/null
+```
+
+You can set it permanently by adding the above `export` command to your `~/.bashrc` file.
 
 ## Connect to the remote pool
 
@@ -59,17 +89,10 @@ Whenever you want to interact with the remote pool, you will need to run this co
 ```python
 import htcondor2 as htcondor
 
-htcondor.param["SEC_TOKEN_DIRECTORY"] = "./token/"
 collector = htcondor.Collector("cm.chtc.wisc.edu")
-ap = htcondor.classad.quote("ap2002.chtc.wisc.edu")
-schedd_ads = collector.query(htcondor.AdTypes.Schedd, constraint=f"Name=?={ap}", projection=["Name", "MyAddress", "DaemonCoreDutyCycle", "CondorVersion"])[0]
+schedd_ads = collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu")
 schedd = htcondor.Schedd(schedd_ads)
 ```
-
-> [!TIP]
-> You may see a warning when you import `htcondor`.
-> You can prevent this message by setting the environment variable `CONDOR_CONFIG=/dev/null`.
-> (If you have a local condor config file, you can set that path instead.)
 
 The `schedd` object represents the part of HTCondor that you normally interact with when you are on the access point.
 Using this object, you can submit jobs, check the queue and history, and other things.
@@ -78,6 +101,12 @@ For example, the following command will list your jobs by their ID and status.
 
 ```python
 schedd.query('User == "YOUR_USERNAME@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
+```
+
+or
+
+```python
+schedd.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
 ## Describe the test job
@@ -178,13 +207,13 @@ There are two steps to submitting the job:
 
 To send the job description, run the following in your python session:
 
-```
+```python
 submit_object = schedd.submit(test_job, spool=True)
 ```
 
 You then need to send the local input files by running
 
-```
+```python
 schedd.spool(submit_object)
 ```
 
@@ -250,11 +279,7 @@ This should return the output files from the corresponding job to your local dir
 
 Currently, you have to manually remove the job from the queue once you have retrieved the results.
 
-You can do so with
-
 ```python
-schedd.act(htcondor.JobAction.Remove, f"ClusterID == {submit_object.cluster()}")
+schedd.edit(submit_object.cluster(), "LeaveJobInQueue", False)
 ```
 
-> [!NOTE]
-> While this will place the job into the history records, the record for such a job will be marked as "Removed" if you examine it with `condor_history`.
