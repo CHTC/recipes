@@ -116,7 +116,7 @@ Normally this is automatically run on submission when you use `condor_submit` on
 
 ```python
 credd_ad = collector.locate(htcondor.DaemonType.Credd, ap_name)
-credd = htcondor.Credd(cred_ad)
+credd = htcondor.Credd(credd_ad)
 for service in ["rdrive", "scitokens"]:
     credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
 ```
