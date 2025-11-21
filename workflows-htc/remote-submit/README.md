@@ -32,9 +32,9 @@ You will prompted as normal for logging in to the access point, but once success
 For example, if your NetID is `bbadger` and you are using `ap2002`, then the you would run
 
 ```bash
-mkdir -p ./token
-ssh bbadger@ap2002.chtc.wisc.edu condor_token_fetch > ./token/ap2002
-chmod 600 ./token/*
+mkdir -p ~/.condor/tokens.d
+ssh bbadger@ap2002.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/ap2002
+chmod 600 ~/.condor/tokens.d/*
 ```
 
 > [!CAUTION]
