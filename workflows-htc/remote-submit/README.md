@@ -90,23 +90,22 @@ Whenever you want to interact with the remote pool, you will need to run this co
 import htcondor2 as htcondor
 
 collector = htcondor.Collector("cm.chtc.wisc.edu")
-schedd_ads = collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu")
-schedd = htcondor.Schedd(schedd_ads)
+ap2002 = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu"))
 ```
 
-The `schedd` object represents the part of HTCondor that you normally interact with when you are on the access point.
+The `ap2002` object represents HTCondor on the `ap2002` access point.
 Using this object, you can submit jobs, check the queue and history, and other things.
 
 For example, the following command will list your jobs by their ID and status.
 
 ```python
-schedd.query('User == "YOUR_USERNAME@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
+ap2002.query('User == "YOUR_USERNAME@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
 or
 
 ```python
-schedd.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
+ap2002.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
 ## Describe the test job
@@ -163,6 +162,7 @@ echo "This is an error message" >&2
 grep -i "badger" test.txt > result.txt
 '''
 
+
 with open('test.sh', 'w') as f:
     f.write(test_sh)
 ```
@@ -174,6 +174,7 @@ test_txt = '''Bucky Badger says hi!
 This line contains a "badger" and will be in the output.
 This line does not and so will not be in the output.
 '''
+
 
 with open('test.txt', 'w') as f:
     f.write(test_txt)
@@ -208,13 +209,13 @@ There are two steps to submitting the job:
 To send the job description, run the following in your python session:
 
 ```python
-submit_object = schedd.submit(test_job, spool=True)
+submit_object = ap2002.submit(test_job, spool=True)
 ```
 
 You then need to send the local input files by running
 
 ```python
-schedd.spool(submit_object)
+ap2002.spool(submit_object)
 ```
 
 The `submit_object` contains information about your job submission.
@@ -229,7 +230,7 @@ The files are transferred to a temporary directory on the access point made espe
 Confirm that your job was submitted with this query:
 
 ```python
-schedd.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
+ap2002.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
 ```
 
 ## Monitor the job
@@ -245,15 +246,17 @@ import time
 done = False
 print("Waiting for job completion...")
 while not done:
-    ads = schedd.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
+    ads = ap2002.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
     done = all(i['JobStatus'] == 4 for i in ads)
     time.sleep(60)
     print('.', end='', flush=True)
 print("\nJob(s) have completed!")
+
+
 ```
 
 > [!CAUTION]
-> Do not query the schedd in loops faster than 30 seconds per loop!!
+> Do not query the access point in loops faster than 30 seconds per loop!!
 
 There are more elaborate ways of setting up the monitoring, especially in combination with the next step (transferring output files).
 And if you are going to submit lots of jobs, there are other recommended ways to monitor the progress.
@@ -267,7 +270,7 @@ To get the results, use the `retrieve` method on your **completed** jobs.
 For this example,
 
 ```python
-schedd.retrieve(f"ClusterID == {submit_object.cluster()}")
+ap2002.retrieve(f"ClusterID == {submit_object.cluster()}")
 ```
 
 This should return the output files from the corresponding job to your local directory.
@@ -280,6 +283,6 @@ This should return the output files from the corresponding job to your local dir
 Currently, you have to manually remove the job from the queue once you have retrieved the results.
 
 ```python
-schedd.edit(submit_object.cluster(), "LeaveJobInQueue", False)
+ap2002.edit(submit_object.cluster(), "LeaveJobInQueue", False)
 ```
 
