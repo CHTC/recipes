@@ -2,9 +2,9 @@
 
 # Before running this script, you need to run the following in your terminal!!!
 #
-#     mkdir -p ./token
-#     ssh yourNetID@yourAccessPoint.chtc.wisc.edu condor_token_fetch > ./token/yourAccessPoint
-#     chmod 600 ./token/*
+#     mkdir -p ~/.condor/tokens.d
+#     ssh yourNetID@yourAccessPoint.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/yourAccessPoint
+#     chmod 600 ~/.condor/tokens.d/*
 #
 # where `yourNetID` is replaced with **your** NetID, and `yourAccessPoint` is replaced with the name of **your** access point.
 # You will prompted as normal for logging in to the access point, but once successful the command `condor_token_fetch` will run and the output will be saved to the file in the `token` directory.
@@ -18,11 +18,8 @@ import htcondor2 as htcondor
 
 # Whenever you want to interact with the remote pool, you will need to run this code first.
 
-htcondor.param["SEC_TOKEN_DIRECTORY"] = "./token/"
 collector = htcondor.Collector("cm.chtc.wisc.edu")
-ap = htcondor.classad.quote("ap2002.chtc.wisc.edu")
-schedd_ads = collector.query(htcondor.AdTypes.Schedd, constraint=f"Name=?={ap}", projection=["Name", "MyAddress", "DaemonCoreDutyCycle", "CondorVersion"])[0]
-schedd = htcondor.Schedd(schedd_ads)
+access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu"))
 
 # GENERATE CREDENTIALS
 
@@ -30,7 +27,7 @@ schedd = htcondor.Schedd(schedd_ads)
 # Normally this is automatically run on submission when you use `condor_submit` on the access point.
 # You should only need to do this once per session.
 
-cred_ad = collector.query(htcondor.AdTypes.Credd, constraint=f"Name == {ap}")[0]
+cred_ad = collector.query(htcondor.AdTypes.Credd, constraint='Name == "ap2002.chtc.wisc.edu"')[0]
 credd = htcondor.Credd(cred_ad)
 for service in ["rdrive", "scitokens"]:
     credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
@@ -88,15 +85,15 @@ with open('test.txt', 'w') as f:
 # SUBMIT THE TEST JOB
 
 # Send the job description
-submit_object = schedd.submit(test_job, spool=True)
+submit_object = access_point.submit(test_job, spool=True)
 
 # Send the local input files (DO NOT SEND LARGE FILES THIS WAY!!)
-schedd.spool(submit_object)
+access_point.spool(submit_object)
 
 # CONFIRM JOB SUBMISSION
 
 print('Checking that job was submitted')
-schedd.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
+access_point.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
 
 # MONITOR JOB COMPLETION
 
@@ -105,13 +102,13 @@ import time
 done = False
 print("Waiting for job completion...")
 while not done:
-    ads = schedd.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
+    ads = access_point.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
     done = all(i['JobStatus'] == 4 for i in ads)
     time.sleep(60)
     print('.', end='', flush=True)
 print("\nJob(s) have completed!")
 
-# Do not query the schedd in loops faster than 30 seconds per loop!!
+# Do not query the access point in loops faster than 30 seconds per loop!!
 # There are more elaborate ways of setting up the monitoring, especially in combination with the next step (transferring output files).
 # And if you are going to submit lots of jobs, there are other recommended ways to monitor the progress.
 
@@ -120,8 +117,13 @@ print("\nJob(s) have completed!")
 # Because you remotely submitted the job, the job will remain in the queue marked as "completed" until you fetch the results or remove the job.
 
 # To get the results, use the `retrieve` method on your **completed** jobs.
-schedd.retrieve(f"ClusterID == {submit_object.cluster()}")
+access_point.retrieve(f"ClusterID == {submit_object.cluster()}")
+
+print("Output file(s) have been retrieved.")
 
 # REMOVE THE JOB
 
-schedd.act(htcondor.JobAction.Remove, f"ClusterID == {submit_object.cluster()}")
+access_point.edit(submit_object.cluster(), "LeaveJobInQueue", False)
+
+print("Job(s) have been moved to history.")
+
