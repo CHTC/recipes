@@ -18,8 +18,9 @@ import htcondor2 as htcondor
 
 # Whenever you want to interact with the remote pool, you will need to run this code first.
 
-collector = htcondor.Collector("cm.chtc.wisc.edu")
-access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu"))
+ap_name = "ap2002.chtc.wisc.edu"
+collector = htcondor.Collector("cm.chtc.wisc.edu")  # This collector is specific to CHTC!
+access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, ap_name))
 
 # GENERATE CREDENTIALS
 
@@ -27,8 +28,8 @@ access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2
 # Normally this is automatically run on submission when you use `condor_submit` on the access point.
 # You should only need to do this once per session.
 
-cred_ad = collector.query(htcondor.AdTypes.Credd, constraint='Name == "ap2002.chtc.wisc.edu"')[0]
-credd = htcondor.Credd(cred_ad)
+credd_ad = collector.locate(htcondor.DaemonType.Credd, ap_name)
+credd = htcondor.Credd(credd_ad)
 for service in ["rdrive", "scitokens"]:
     credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
 
@@ -50,7 +51,7 @@ test_job_dict = {
     "request_memory": "1 GB",
     "request_disk": "1 GB",
     # special options due to remote submit:
-    "FileSystemDomain": "ap2002.chtc.wisc.edu",
+    "FileSystemDomain": ap_name,
     "Requirements": default_submit_requirements,
     # no queue statement in this dict; use the submit method!
 }
