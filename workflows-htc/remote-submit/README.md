@@ -23,7 +23,7 @@ Run the following commands,
 ```bash
 mkdir -p ~/.condor/tokens.d
 ssh yourNetID@yourAccessPoint.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/yourAccessPoint
-chmod 600 ./.condor/tokens.d/*
+chmod 600 ~/.condor/tokens.d/*
 ```
 
 where `yourNetID` is replaced with **your** NetID, and `yourAccessPoint` is replaced with the name of **your** access point.
@@ -89,8 +89,9 @@ Whenever you want to interact with the remote pool, you will need to run this co
 ```python
 import htcondor2 as htcondor
 
-collector = htcondor.Collector("cm.chtc.wisc.edu")
-access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu"))
+ap_name = "ap2002.chtc.wisc.edu"
+collector = htcondor.Collector("cm.chtc.wisc.edu")  # This collector is specific to CHTC!
+access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, ap_name))
 ```
 
 The `access_point` object represents HTCondor on the access point.
@@ -107,6 +108,23 @@ or
 ```python
 access_point.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
+
+## Generate credentials
+
+This step is currently necessary in order for any jobs you submit from you local machine to run.
+Normally this is automatically run on submission when you use `condor_submit` on the access point.
+
+```python
+credd_ad = collector.locate(htcondor.DaemonType.Credd, ap_name)
+credd = htcondor.Credd(cred_ad)
+for service in ["rdrive", "scitokens"]:
+    credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
+```
+
+> [!CAUTION]
+> If you skip this step, your job will go on hold with the message `Job credentials not available`!
+
+You should only need to do this once per session.
 
 ## Describe the test job
 
@@ -132,7 +150,7 @@ test_job_dict = {
     "request_memory": "1 GB",
     "request_disk": "1 GB",
     # special options due to remote submit:
-    "FileSystemDomain": "ap2002.chtc.wisc.edu",
+    "FileSystemDomain": ap_name,
     "Requirements": default_submit_requirements,
     # no queue statement in this dict; use the submit method!
 }
@@ -140,6 +158,7 @@ test_job_dict = {
 # This creates the job description, but **does not** submit the job!
 # Your queue statement is defined in this step, as an option to the Submit method.
 test_job = htcondor.Submit(test_job_dict)
+
 ```
 
 There are other ways of defining the job, including reading in a regular submit file.
@@ -179,23 +198,6 @@ This line does not and so will not be in the output.
 with open('test.txt', 'w') as f:
     f.write(test_txt)
 ```
-
-## Generate credentials
-
-This step is currently necessary in order for any jobs you submit from you local machine to run.
-Normally this is automatically run on submission when you use `condor_submit` on the access point.
-
-```python
-cred_ad = collector.query(htcondor.AdTypes.Credd, constraint=f"Name == {ap}")[0]
-credd = htcondor.Credd(cred_ad)
-for service in ["rdrive", "scitokens"]:
-    credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
-```
-
-> [!CAUTION]
-> If you skip this step, your job will go on hold with the message `Job credentials not available`!
-
-You should only need to do this once per session.
 
 ## Submit the test job
 
