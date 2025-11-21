@@ -90,22 +90,22 @@ Whenever you want to interact with the remote pool, you will need to run this co
 import htcondor2 as htcondor
 
 collector = htcondor.Collector("cm.chtc.wisc.edu")
-ap2002 = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu"))
+access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, "ap2002.chtc.wisc.edu"))
 ```
 
-The `ap2002` object represents HTCondor on the `ap2002` access point.
+The `access_point` object represents HTCondor on the access point.
 Using this object, you can submit jobs, check the queue and history, and other things.
 
 For example, the following command will list your jobs by their ID and status.
 
 ```python
-ap2002.query('User == "YOUR_USERNAME@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
+access_point.query('User == "YOUR_USERNAME@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
 or
 
 ```python
-ap2002.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
+access_point.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
 ## Describe the test job
@@ -209,13 +209,13 @@ There are two steps to submitting the job:
 To send the job description, run the following in your python session:
 
 ```python
-submit_object = ap2002.submit(test_job, spool=True)
+submit_object = access_point.submit(test_job, spool=True)
 ```
 
 You then need to send the local input files by running
 
 ```python
-ap2002.spool(submit_object)
+access_point.spool(submit_object)
 ```
 
 The `submit_object` contains information about your job submission.
@@ -230,7 +230,7 @@ The files are transferred to a temporary directory on the access point made espe
 Confirm that your job was submitted with this query:
 
 ```python
-ap2002.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
+access_point.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
 ```
 
 ## Monitor the job
@@ -246,7 +246,7 @@ import time
 done = False
 print("Waiting for job completion...")
 while not done:
-    ads = ap2002.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
+    ads = access_point.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
     done = all(i['JobStatus'] == 4 for i in ads)
     time.sleep(60)
     print('.', end='', flush=True)
@@ -270,7 +270,7 @@ To get the results, use the `retrieve` method on your **completed** jobs.
 For this example,
 
 ```python
-ap2002.retrieve(f"ClusterID == {submit_object.cluster()}")
+access_point.retrieve(f"ClusterID == {submit_object.cluster()}")
 ```
 
 This should return the output files from the corresponding job to your local directory.
@@ -283,6 +283,6 @@ This should return the output files from the corresponding job to your local dir
 Currently, you have to manually remove the job from the queue once you have retrieved the results.
 
 ```python
-ap2002.edit(submit_object.cluster(), "LeaveJobInQueue", False)
+access_point.edit(submit_object.cluster(), "LeaveJobInQueue", False)
 ```
 
