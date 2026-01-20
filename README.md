@@ -46,10 +46,9 @@ We welcome contributions and feedback! [See below](#contributions-and-feedback) 
 You can retrieve the contents of this repository while logged in to CHTC ([Connecting to CHTC](https://chtc.cs.wisc.edu/uw-research-computing/connecting)) following the instructions below.
 
 1. [Whole repository](#whole-repository)
-1. [Individual files](#individual-files)
-1. [Directory](#directory)
+2. [Individual files](#individual-files)
 
-### Whole repository
+### 1. Whole repository
 
 If you want the whole repository, simply run
 
@@ -57,7 +56,7 @@ If you want the whole repository, simply run
 git clone https://github.com/CHTC/recipes.git
 ```
 
-### Individual files
+### 2. Individual files
 
 Individual files can be retrieved using the URL `https://github.com/CHTC/recipes/raw/main/` in combination with the relative path to the file within the repository.
 
@@ -74,26 +73,9 @@ The command to retrieve the file is
 wget https://github.com/CHTC/recipes/raw/main/software/guide_examples/simple_apptainer.def
 ```
 
-### Directory
+Alternatively, you can navigate to the file you want in the web browser, and right-click on "Raw" and Copy Link Address. Then, while logged in CHTC, type `wget`, paste in the link, then hit enter to download the file directly.
 
-At this time, GitHub does not have a mechanism for retrieving a sub-directory of a repository.
-Therefore, for cases where a user may want to have an entire directory, we have prepared compressed tarballs for easy retrieval.
-
-Follow the instructions above to retrieve the `.tar.gz` file within the directory of interest. 
-Then unpack the compressed directory using the `tar` command.
-
-For example, the [workflows/simple_DAG](/workflows/simple_DAG) directory includes the compressed file `simple_DAG.tar.gz`.
-Retrieve the file using the command
-
-```
-wget https://github.com/CHTC/recipes/raw/main/workflows/simple_DAG/simple_DAG.tar.gz
-```
-
-and then unpack the compressed directory with
-
-```
-tar -xzf simple_DAG.tar.gz
-```
+![Alt text](./docs/getfileURL.png "How to retrieve a URL for direct download")
 
 ## Contributions and Feedback
 
