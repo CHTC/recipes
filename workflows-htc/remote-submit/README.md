@@ -111,8 +111,8 @@ access_point.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["Clus
 
 ## Generate credentials
 
-This step is currently necessary in order for any jobs you submit from you local machine to run.
-Normally this is automatically run on submission when you use `condor_submit` on the access point.
+~~This step is currently necessary in order for any jobs you submit from you local machine to run.~~
+~~Normally this is automatically run on submission when you use `condor_submit` on the access point.~~
 
 ```python
 credd_ad = collector.locate(htcondor.DaemonType.Credd, ap_name)
@@ -121,10 +121,29 @@ for service in ["rdrive", "scitokens"]:
     credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
 ```
 
-> [!CAUTION]
-> If you skip this step, your job will go on hold with the message `Job credentials not available`!
+> ~~[!CAUTION]~~
+> ~~If you skip this step, your job will go on hold with the message `Job credentials not available`!~~
 
-You should only need to do this once per session.
+~~You should only need to do this once per session.~~
+
+The above steps shouldn't be necessary - however, to have credentials for your job, we need to implement a workaround by keeping one job in the queue. Log into the AP and submit a job. You may use the example submit file:
+
+```
+batch_name = placeholder
+shell = sleep 300
+request_cpus = 1
+request_disk = 1 MB
+request_memory = 1 MB
+queue
+```
+
+After the job is submitted, hold the job:
+
+```
+condor_hold <job_id>
+```
+
+Return to working in Python.
 
 ## Describe the test job
 
