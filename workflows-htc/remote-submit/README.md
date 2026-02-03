@@ -1,5 +1,8 @@
 # Remote Submission to CHTC
 
+> [!Caution]
+> You may not share your token with anyone. Sharing your token is akin to sharing yoru password, and is a violation of CHTC policy. Violations will result in account deactivation. Read our user expecations and policies here: https://chtc.cs.wisc.edu/uw-research-computing/user-expectations.html
+
 ## Software installation
 
 You'll need to install the HTCondor Python bindings to your local device.
@@ -9,6 +12,12 @@ This can generally be done by running
 python3 -m pip install htcondor
 ```
 
+If you are on MacOS, the package is only available via [conda-forge](https://anaconda.org/channels/conda-forge/packages/htcondor/overview):
+
+```bash
+conda install conda-forge::htcondor
+```
+
 Once installed, you should be able to run the following command to return the condor version.
 
 ```bash
@@ -16,6 +25,8 @@ CONDOR_CONFIG=/dev/null python3 -c 'import htcondor2 as htcondor ; print(htcondo
 ```
 
 ## Setup
+
+### Get access token
 
 Before starting your Python session, you need to get an access token from the access point you want to submit to.
 Run the following commands, 
@@ -40,6 +51,17 @@ chmod 600 ~/.condor/tokens.d/*
 > [!CAUTION]
 > If the permissions for the token file are not set correctly, you will get an error when you try to submit your job!
 
+### Create user configuration
+
+Create a `user_config` file in your `.condor` directory (i.e. `~/.condor/user_config`). In this file, add these lines:
+
+```
+SCHEDD_HOST = ap2002.chtc.wisc.edu
+COLLECTOR_HOST = cm.chtc.wisc.edu
+```
+
+If you are using a different Access Point, replace `ap2002.chtc.wisc.edu` with the full address of the Access Point.
+
 ## Running python
 
 The following commands can be run in the python console (launched by running `python3`) or in a python script.
@@ -55,7 +77,7 @@ htcondor.enable_debug()
 
 ### Importing htcondor
 
-To get the lastest version of the Python bindings, you'll need to import `htcondor2`.
+To get the latest version of the Python bindings, you'll need to import `htcondor2`.
 To support backwards compatibility on existing scripts, we recommend 
 
 ```python
@@ -89,9 +111,7 @@ Whenever you want to interact with the remote pool, you will need to run this co
 ```python
 import htcondor2 as htcondor
 
-ap_name = "ap2002.chtc.wisc.edu"
-collector = htcondor.Collector("cm.chtc.wisc.edu")  # This collector is specific to CHTC!
-access_point = htcondor.Schedd(collector.locate(htcondor.DaemonType.Schedd, ap_name))
+access_point = htcondor.Schedd()
 ```
 
 The `access_point` object represents HTCondor on the access point.
@@ -111,22 +131,10 @@ access_point.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["Clus
 
 ## Generate credentials
 
-~~This step is currently necessary in order for any jobs you submit from you local machine to run.~~
-~~Normally this is automatically run on submission when you use `condor_submit` on the access point.~~
+> [!IMPORTANT]
+> Currently, we need to implement a workaround to have submission credentials for your job. This will eventually be phased out.
 
-```python
-credd_ad = collector.locate(htcondor.DaemonType.Credd, ap_name)
-credd = htcondor.Credd(credd_ad)
-for service in ["rdrive", "scitokens"]:
-    credd.add_user_service_cred(htcondor.CredType.OAuth, b"", service)
-```
-
-> ~~[!CAUTION]~~
-> ~~If you skip this step, your job will go on hold with the message `Job credentials not available`!~~
-
-~~You should only need to do this once per session.~~
-
-The above steps shouldn't be necessary - however, to have credentials for your job, we need to implement a workaround by keeping one job in the queue. Log into the AP and submit a job. You may use the example submit file:
+To workaround submission credential issues, we need to keep one job in the queue. Log into the AP and submit a job. You may use the example submit file:
 
 ```
 batch_name = placeholder
@@ -145,47 +153,9 @@ condor_hold <job_id>
 
 Return to working in Python.
 
-## Describe the test job
+## Create files for a test job
 
-Like with submitting a job on the access point, you'll need to tell HTCondor the parameters for managing your job.
-On the access point, you would create a submit file.
-You can do something similar using the Python bindings.
-
-```python
-
-# This is normally added automatically when you submit jobs on the access point.
-# But that doesn't happen with remote submit.
-default_submit_requirements = '(TARGET.PoolName == "CHTC") && ((((Target.OpSysMajorVer == 9) && (Target.OpSysName =!= "Debian") &&  !(Target.OSPool ?: false))) || (((Target.OSPool ?: false) && ((Target.OSGVO_OS_STRING ?: "") == "RHEL 9")))) && (TARGET.Arch == "X86_64") && (TARGET.OpSys == "LINUX") && (TARGET.Disk >= RequestDisk) && (TARGET.Memory >= RequestMemory) && ((TARGET.FileSystemDomain == MY.FileSystemDomain) || (TARGET.HasFileTransfer))'
-
-test_job_dict = {
-    "executable": "test.sh",
-    "arguments": "rst 123",
-    "log": "test.log",
-    "output": "test.out",
-    "error": "test.err",
-    "transfer_executable": False,
-    "transfer_input_files": "test.txt, test.sh",
-    "request_cpus": "1",
-    "request_memory": "1 GB",
-    "request_disk": "1 GB",
-    # special options due to remote submit:
-    "FileSystemDomain": ap_name,
-    "Requirements": default_submit_requirements,
-    # no queue statement in this dict; use the submit method!
-}
-
-# This creates the job description, but **does not** submit the job!
-# Your queue statement is defined in this step, as an option to the Submit method.
-test_job = htcondor.Submit(test_job_dict)
-
-```
-
-There are other ways of defining the job, including reading in a regular submit file.
-
-### Create files for test job
-
-As you may have noticed, the test job described above requires `test.txt` and `test.sh`.
-Create those files with the following Python code:
+We'll create a test job with the following Python code:
 
 **test.sh**
 
@@ -217,6 +187,35 @@ This line does not and so will not be in the output.
 with open('test.txt', 'w') as f:
     f.write(test_txt)
 ```
+
+## Describe the test job
+
+Like with submitting a job on the access point, you'll need to tell HTCondor the parameters for managing your job.
+On the access point, you would create a submit file.
+You can do something similar using the Python bindings.
+
+```python
+
+test_job_dict = {
+    "executable": "test.sh",
+    "arguments": "rst 123",
+    "log": "test.log",
+    "output": "test.out",
+    "error": "test.err",
+    "transfer_executable": False,
+    "transfer_input_files": "test.txt, test.sh",
+    "request_cpus": "1",
+    "request_memory": "1 GB",
+    "request_disk": "1 GB",
+}
+
+# This creates the job description, but **does not** submit the job!
+# Your queue statement is defined in this step, as an option to the Submit method.
+test_job = htcondor.Submit(test_job_dict)
+
+```
+
+There are other ways of defining the job, including reading in a regular submit file.
 
 ## Submit the test job
 
@@ -254,7 +253,19 @@ Confirm that your job was submitted with this query:
 access_point.query(f"ClusterID == {submit_object.cluster()}", projection = ["ProcID", "JobStatus"])
 ```
 
-## Monitor the job
+[Job Status Codes](https://htcondor.readthedocs.io/en/latest/classad-attributes/job-classad-attributes.html#JobStatus)
+
+| Code | Status |
+| --- | --- |
+| 1 | Idle |
+| 2 | Running |
+| 3 | Removing | 
+| 4 | Completed | 
+| 5 | Held |
+| 6 | Transferring Output | 
+| 7 | Suspended |
+
+## Optional: monitor the job
 
 Because you remotely submitted the job, you will need to run the query command each time you want to see the status of the job.
 This sort of monitoring is best implemented as a `while` loop with a moderate sleep delay to prevent overwhelming the access point with queries.
@@ -282,7 +293,7 @@ print("\nJob(s) have completed!")
 There are more elaborate ways of setting up the monitoring, especially in combination with the next step (transferring output files).
 And if you are going to submit lots of jobs, there are other recommended ways to monitor the progress.
 
-## Fetching results
+## Fetch results
 
 Because you remotely submitted the job, the job will remain in the queue marked as "completed" until you fetch the results or remove the job.
 
@@ -306,4 +317,3 @@ Currently, you have to manually remove the job from the queue once you have retr
 ```python
 access_point.edit(submit_object.cluster(), "LeaveJobInQueue", False)
 ```
-
