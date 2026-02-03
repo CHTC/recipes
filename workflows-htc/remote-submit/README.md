@@ -1,7 +1,7 @@
 # Remote Submission to CHTC
 
 > [!Caution]
-> You may not share your token with anyone. Sharing your token is akin to sharing yoru password, and is a violation of CHTC policy. Violations will result in account deactivation. Read our user expecations and policies here: https://chtc.cs.wisc.edu/uw-research-computing/user-expectations.html
+> You may not share your token with anyone. Sharing your token is akin to sharing your password, and is a violation of CHTC policy. Violations will result in account deactivation. Read our user expecations and policies here: https://chtc.cs.wisc.edu/uw-research-computing/user-expectations.html
 
 ## Software installation
 
@@ -317,3 +317,7 @@ Currently, you have to manually remove the job from the queue once you have retr
 ```python
 access_point.edit(submit_object.cluster(), "LeaveJobInQueue", False)
 ```
+
+## Support
+
+Please direct all questions to [chtc@cs.wisc.edu](mailto:chtc@cs.wisc.edu)
