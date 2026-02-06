@@ -139,19 +139,14 @@ To workaround submission credential issues, we need to keep one job in the queue
 ```
 batch_name = placeholder
 shell = sleep 300
+hold = true
 request_cpus = 1
 request_disk = 1 MB
 request_memory = 1 MB
 queue
 ```
 
-After the job is submitted, hold the job:
-
-```
-condor_hold <job_id>
-```
-
-Return to working in Python.
+Submit the job, then return to working in Python.
 
 ## Create files for a test job
 
