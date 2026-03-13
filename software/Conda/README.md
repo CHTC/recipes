@@ -19,6 +19,7 @@
 Recipes for software installed using [Conda](https://docs.conda.io/en/latest/).
 
 - [Adding packages to base conda](base-conda)
+- [Install packages from Bioconda](bioconda)
 - [Installing packages using a environment.yaml file](conda-env-yaml)
 - [Creating multiple conda environments in one container](conda-multi-env)
 - [Installing PyTorch using conda](conda-pytorch)
