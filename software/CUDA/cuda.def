@@ -1,0 +1,9 @@
+Bootstrap: docker
+From: nvidia/cuda:12.6.3-runtime-ubuntu22.04
+
+%post
+	chmod 777 /tmp
+    apt-get update -y
+    apt-get install -y python3 python3-pip
+
+    python3 -m pip install cowsay
