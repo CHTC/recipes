@@ -19,6 +19,15 @@
 This recipe provides the definition file for the "parent" Apptainer container,
 which has the ability to launch a "child" Apptainer container inside of it.
 
+# Launching inner container
+
+To run the inner container, you need to use the `--unsquash` argument with your `apptainer` command.
+For example,
+
+```
+apptainer exec --unsquash my_inner_container.sif inner_script.sh
+```
+
 ## Bare minimum setup
 
 These images have the bare minimum required in order to use Apptainer inside of Apptainer.
