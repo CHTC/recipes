@@ -1,0 +1,30 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:26.03-py3
+
+%post
+    # Using NVIDIA for CUDA/hardware interoperability.
+    # But NVIDIA is using a custom build of PyTorch.
+    # Therefore, need to build `libnatten` from scratch.
+    # To do that, need cmake.
+    # But there are broken pointers..
+
+    # Remove broken pointers
+    python3 -m pip uninstall -y cmake ninja
+    rm -f /usr/local/bin/cmake /usr/local/bin/ninja /usr/local/bin/cmake-gui
+
+    # Make sure cmake, build things are installed
+    apt-get update && apt-get install -y cmake ninja-build build-essential
+    python3 -m pip install cmake ninja setuptools packaging 
+
+    # Number of CPU cores to use (make sure request_cpus match)
+    # (needs 5GB RAM : 1 CPU core to be successful)
+    export MAX_JOBS=4
+    export NATTEN_N_WORKERS=4
+
+    # Specify the hardware compute capability of the GPUs.
+    # This enables use with A100, L40, and H200 models.
+    export NATTEN_CUDA_ARCH="8.0;8.9;9.0"
+
+    # Install NATTEN (triggers automatic compile of `libnatten`)
+    python3 -m pip install natten==0.21.6 --no-build-isolation --no-cache-dir --verbose
+
