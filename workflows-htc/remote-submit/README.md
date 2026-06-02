@@ -3,50 +3,54 @@
 > [!Caution]
 > You may not share your token with anyone. Sharing your token is akin to sharing your password, and is a violation of CHTC policy. Violations will result in account deactivation. Read our user expecations and policies here: https://chtc.cs.wisc.edu/uw-research-computing/user-expectations.html
 
-## Software installation
+## Prerequisites and setup
 
-You'll need to install the HTCondor Python bindings to your local device.
-This can generally be done by running
+You will need:
+- Python
+- An account on ap2001, ap2002, or other HTC Access Points (AP)
+
+Before you can submit any jobs remotely, you will need to setup a few things. This guide will walk you through setup:
+1. Install the HTCondor Python bindings
+1. Get your access token
+1. Create user configuration
+
+### Install the HTCondor Python Bindings
+
+You'll need to install the HTCondor Python bindings to your local device. You do *not* need to install HTCondor itself, just the Python bindings.
+
+#### pip (Windows/Linux-only)
 
 ```bash
 python3 -m pip install htcondor
 ```
 
-If you are on MacOS, the package is only available via [conda-forge](https://anaconda.org/channels/conda-forge/packages/htcondor/overview):
+If you are on MacOS, the package is only available via [conda-forge](https://anaconda.org/channels/conda-forge/packages/htcondor/overview).
+
+#### conda (Windows/Linux/MacOS)
 
 ```bash
 conda install conda-forge::htcondor
 ```
 
-Once installed, you should be able to run the following command to return the condor version.
+Verify your installation by running the following command to return the condor version.
 
 ```bash
 CONDOR_CONFIG=/dev/null python3 -c 'import htcondor2 as htcondor ; print(htcondor.version())'
 ```
 
-## Setup
+### Get your access token
 
-### Get access token
-
-Before starting your Python session, you need to get an access token from the access point you want to submit to.
+Retrieve your access token from the Access Point (AP).
 Run the following commands, 
 
 ```bash
 mkdir -p ~/.condor/tokens.d
-ssh yourNetID@yourAccessPoint.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/yourAccessPoint
+ssh netid@ap2002.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/ap2002
 chmod 600 ~/.condor/tokens.d/*
 ```
 
-where `yourNetID` is replaced with **your** NetID, and `yourAccessPoint` is replaced with the name of **your** access point.
-You will prompted as normal for logging in to the access point, but once successful the command `condor_token_fetch` will run and the output will be saved to the file in the `token` directory.
-
-For example, if your NetID is `bbadger` and you are using `ap2002`, then the you would run
-
-```bash
-mkdir -p ~/.condor/tokens.d
-ssh bbadger@ap2002.chtc.wisc.edu condor_token_fetch > ~/.condor/tokens.d/ap2002
-chmod 600 ~/.condor/tokens.d/*
-```
+Replace `netid` with **your** actual NetID, and `ap2002` with the name of **your** AP.
+You will prompted as normal for logging in to the AP, then the command `condor_token_fetch` will run and the output will be saved to the file in your local `tokens.d` directory.
 
 > [!CAUTION]
 > If the permissions for the token file are not set correctly, you will get an error when you try to submit your job!
@@ -60,22 +64,18 @@ SCHEDD_HOST = ap2002.chtc.wisc.edu
 COLLECTOR_HOST = cm.chtc.wisc.edu
 ```
 
-If you are using a different Access Point, replace `ap2002.chtc.wisc.edu` with the full address of the Access Point.
+If you are using a different AP, replace `ap2002.chtc.wisc.edu` with the fully qualified domain name (FQDN) of the AP. If you are not sure what the FQDN of your AP is, log into the AP and run the following command:
 
-## Running python
-
-The following commands can be run in the python console (launched by running `python3`) or in a python script.
-
-We recommend that you test these commands in the console before you try to implement them in a script, so that you can troubleshoot issues.
-At any time, you can turn on debugging with the python command
-
-```python
-import htcondor2 as htcondor
-
-htcondor.enable_debug()
+```
+hostname -f
 ```
 
-### Importing htcondor
+## Run Python
+
+> [!Note]
+> We recommend that you test these commands in the console before you try to implement them in a script, so that you can troubleshoot issues.
+
+### Import HTCondor
 
 To get the latest version of the Python bindings, you'll need to import `htcondor2`.
 To support backwards compatibility on existing scripts, we recommend 
@@ -84,12 +84,14 @@ To support backwards compatibility on existing scripts, we recommend
 import htcondor2 as htcondor
 ```
 
+#### Optional: Prevent the config warning message
+
 When you import `htcondor` (or `htcondor2`), it will automatically check for an HTCondor config file.
 If one doesn't exist, it will throw a warning.
 You can prevent this message by setting the environment variable `CONDOR_CONFIG=/dev/null`.
 (If you have a local condor config file, you can set that path instead.)
 
-To temporarily set the value when you launch Python, you can do
+To temporarily set the value when you launch Python, in your bash session, run
 
 ```bash
 CONDOR_CONFIG=/dev/null python3
@@ -103,24 +105,22 @@ export CONDOR_CONFIG=/dev/null
 
 You can set it permanently by adding the above `export` command to your `~/.bashrc` file.
 
-## Connect to the remote pool
+### Connect to the remote pool
 
-The following Python code will instantiate a connection to your remote pool.
-Whenever you want to interact with the remote pool, you will need to run this code first.
+After importing HTCondor, connect to the remote pool by running this code:
 
 ```python
-import htcondor2 as htcondor
-
 access_point = htcondor.Schedd()
 ```
 
-The `access_point` object represents HTCondor on the access point.
+The `access_point` object represents HTCondor on the AP.
 Using this object, you can submit jobs, check the queue and history, and other things.
 
+#### Check your jobs ("condor_q")
 For example, the following command will list your jobs by their ID and status.
 
 ```python
-access_point.query('User == "YOUR_USERNAME@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
+access_point.query('User == "netid@chtc.wisc.edu"', projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
 or
@@ -129,7 +129,7 @@ or
 access_point.query(opts=htcondor.QueryOpt.DefaultMyJobsOnly, projection = ["ClusterID", "ProcID", "JobStatus"])
 ```
 
-## Generate credentials
+### Generate credentials
 
 > [!IMPORTANT]
 > Currently, we need to implement a workaround to have submission credentials for your job. This will eventually be phased out.
@@ -148,7 +148,7 @@ queue
 
 Submit the job, then return to working in Python.
 
-## Create files for a test job
+### Create files for a test job
 
 We'll create a test job with the following Python code:
 
@@ -183,11 +183,10 @@ with open('test.txt', 'w') as f:
     f.write(test_txt)
 ```
 
-## Describe the test job
+### Describe the test job
 
-Like with submitting a job on the access point, you'll need to tell HTCondor the parameters for managing your job.
-On the access point, you would create a submit file.
-You can do something similar using the Python bindings.
+You'll need to tell HTCondor the parameters for managing your job.
+Create a submit object based on a dictionary using the Python bindings.
 
 ```python
 
@@ -210,24 +209,24 @@ test_job = htcondor.Submit(test_job_dict)
 
 ```
 
-There are other ways of defining the job, including reading in a regular submit file.
+`test_job` is the submit object, based on the dictionary `test_job_dict`.
 
-## Submit the test job
+### Submit the test job
 
 Make sure that you have your local files ready for submission.
 
 There are two steps to submitting the job:
 
 1. Sending the job description
-2. Sending the local input files
+1. Sending the local input files
 
-To send the job description, run the following in your python session:
+To send the job description, run the following in your Python session:
 
 ```python
 submit_object = access_point.submit(test_job, spool=True)
 ```
 
-You then need to send the local input files by running
+Next, send the local input files by running
 
 ```python
 access_point.spool(submit_object)
@@ -283,10 +282,10 @@ print("\nJob(s) have completed!")
 ```
 
 > [!CAUTION]
-> Do not query the access point in loops faster than 30 seconds per loop!!
+> Do not query the access point in loops faster than **30 seconds** per loop!
 
 There are more elaborate ways of setting up the monitoring, especially in combination with the next step (transferring output files).
-And if you are going to submit lots of jobs, there are other recommended ways to monitor the progress.
+And if you are going to submit lots of jobs, contact us for other recommended ways to monitor the progress.
 
 ## Fetch results
 
@@ -305,14 +304,14 @@ This should return the output files from the corresponding job to your local dir
 > [!WARNING]
 > If your job creates large output files, those should be redirected to your staging directory using the `transfer_output_remaps` command and the `file://` or `osdf://` protocols.
 
-## Removing the job
+## Troubleshooting
 
-Currently, you have to manually remove the job from the queue once you have retrieved the results.
+At any time, you can turn on debugging with the Python command
 
 ```python
-access_point.edit(submit_object.cluster(), "LeaveJobInQueue", False)
+htcondor.enable_debug()
 ```
 
 ## Support
 
-Please direct all questions to [chtc@cs.wisc.edu](mailto:chtc@cs.wisc.edu)
+Please direct all questions to [chtc@cs.wisc.edu](mailto:chtc@cs.wisc.edu).
