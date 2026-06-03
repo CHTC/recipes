@@ -33,7 +33,7 @@ To install packages from source, download the source code (typically `wget`, `cu
 | ---: | :--- | :--- |
 | *Type* | **Apptainer** | |
 | *OS* | Ubuntu 24.04 | |
-| *Base image* | **ubunto:24.04** | *DockerHub* |
+| *Base image* | **ubuntu:24.04** | *DockerHub* |
 | *Updated* | 2026-06-02 | *Amber Lim* |
 | *Last tested on HTC* | 2026-06-02 | *Amber lim* |
 | *Last tested on HPC* | - | - |
