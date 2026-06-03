@@ -18,6 +18,9 @@
 
 Container definition files for OpenMPI. Typically used as a base recipe for additional software that requires OpenMPI.
 
+> [!CRITICAL]
+> This definition file is intended for software stacks requiring OpenMPI on CHTC's High Throughput Computing system. For multi-node containers on the High Performance Computing system, see [multi-node containers](https://github.com/CHTC/recipes/tree/main/workflows-hpc/multi-node-container).
+
 ## How to install packages
 
 To install additional system packages (i.e., `gfortran`), add the packages to the `apt-get install -y` lines.

@@ -1,6 +1,12 @@
 Bootstrap: docker
 From: ubuntu:24.04
 
+%help
+   This definition file is intended for software stacks requiring OpenMPI
+   on CHTC's High Throughput Computing system. For multi-node containers
+   on the High Performance Computing system, see:
+   https://github.com/CHTC/recipes/tree/main/workflows-hpc/multi-node-container
+
 %post
    # Only run the chmod command on CHTC HTC build nodes,
    # otherwise, delete or comment it out.
