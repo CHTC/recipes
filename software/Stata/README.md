@@ -31,7 +31,7 @@ Definition file and supporting files for installing Stata in a container environ
 
 ## Add license info to `stata19.def`
 
-[!IMPORTANT]
+> [!IMPORTANT]
 > Before you can use Stata 19 on CHTC systems, you must edit `stata19.def` to include license info. Replace these lines to the university-provided license info on the Campus Software page. *Do not include the brackets (`< >`)
 > 
 > ```
