@@ -1,0 +1,434 @@
+#!/bin/bash
+# version 19.5.0  04mar2025
+# Edited 2026-06-29 by Amber Lim (xalim) for noninteractive install
+set -eo pipefail
+
+cmd="$0"
+
+
+ClrScrn() {
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " " 
+	echo " "
+	echo " "
+	echo " "
+}
+
+Answer() {
+	while true 
+	do
+		read answ rest
+		case "$rest" in
+		"")	case "$answ" in
+			y|Y|yes|YES|Yes)	ANSW=y
+						return
+						;;
+			n|N|no|NO|No)		ANSW=n
+						return
+						;;
+			q|Q|quit|QUIT)		exit 1
+						;;
+
+			esac
+			;;
+
+		esac
+		echo " "
+		echo "Enter y or n, or enter q to quit:"
+	done
+}
+
+
+GetPlat() {
+	if [ `uname` = "Linux" ]
+	then
+		ok=1
+	else
+		echo "Your operating system does not appear to be Linux; proceed with caution."
+		echo " "
+	fi
+}
+
+GetLPlat() {
+	if [ `uname -p` = "x86_64" ]
+	then
+		ok=1
+	else
+		echo "Could not confirm that architecture is 64-bit.  StataNow for Linux is only"
+		echo "available for 64-bit Linux."
+		echo " "
+	fi
+}
+
+ClrScrn
+echo "                       StataNow 19.5 Installation"
+echo " "
+echo "This script installs 64-bit StataNow for Linux into the current directory."
+echo " "
+echo "You will be asked questions and then, once all questions are answered,"
+echo "this script will summarize what it will do for final confirmation."
+echo " "
+echo "You may press Break at any time up to giving final confirmation."
+
+echo " "
+echo " "
+#echo "Do you wish to continue?  (y/n or q to quit)"
+#Answer
+#case $ANSW in
+#n)	exit 1 ;;
+#esac
+
+
+
+
+ClrScrn
+GetPlat
+GetLPlat
+plat=linux64
+platU=LINUX64
+title="64-bit StataNow for Linux on x86-64"
+
+curdir=`pwd`
+case "$curdir" in 
+"/usr/local/stata")		;;
+"/usr/local/stata19")		;;
+"/usr/local/statanow19")	;;
+*)
+	echo "Current directory is:  $curdir"
+	echo " "
+	echo "We recommend installing StataNow in directory"
+	echo " "
+	echo "        /usr/local/stata19       or"
+	echo "        /usr/local/statanow19    or"
+	echo "        /usr/local/stata"
+	echo " "
+	#echo "Are you sure you want to install into $curdir?  (y/n or q)"
+	#Answer
+	#case $ANSW in
+	#n)	exit 1 ;;
+	#esac
+	#;;
+esac
+	
+
+markfile="installed.195"
+markfile19="installed.190"
+
+# ---------------------------------------------- verify not already installed
+
+if [ -f $markfile ]
+then
+	ClrScrn
+	echo "Current directory is:  $curdir"
+	echo 
+	echo "The installation has already been performed."
+	echo 
+	if [ -f stata.lic ]
+	then
+		echo "Moreover, the file" 
+		echo "        $curdir/stata.lic" 
+		echo "already exists, too.  I think StataNow is fully installed and ready for use." 
+	else
+		echo "The next step is to run the license installer.  Type:" 
+		echo 
+		echo "        ./stinit"
+	fi
+	echo 
+	echo "(no action taken)" 
+	exit 1
+fi
+
+if [ -f $markfile19 ]
+then
+	echo "You are trying to install StataNow 19.5 on top of an existing"
+	echo "Stata 19 installation."
+	echo 
+	if [ -f stata.lic ]
+	then
+		echo "Moreover, the file" 
+		echo "        $curdir/stata.lic" 
+		echo "already exists, too.  I think Stata 19 is fully installed and ready for use." 
+		echo "If you wish to install StataNow 19.5 in addition to Stata 19, you should"
+		echo "create a new, empty directory, cd into it, and then re-run this"
+		echo "installer.
+	else
+		echo "If you wish to install StataNow 19.5 in addition to Stata 19, you should"
+		echo "create a new, empty directory, cd into it, and then re-run this"
+		echo "installer.
+	fi
+	echo 
+	echo "(no action taken)" 
+	exit 1
+fi
+
+hasstata=no
+if [ -f stata ]
+then
+	hasstata=yes
+fi
+if [ -f xstata ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.60 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.70 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.80 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.90 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.100 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.110 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.120 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.130 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.140 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.150 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.160 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.170 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.180 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.185 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.190 ]
+then
+	hasstata=yes
+fi
+if [ -f isstata.195 ]
+then
+	hasstata=yes
+fi
+
+case $hasstata in
+yes)
+	ClrScrn
+	echo "Current directory is:  $curdir"
+	echo
+	echo "You cannot install over a previously existing installation."
+	echo 
+	echo "You must clear $curdir"
+	echo "or install StataNow in a different directory.  We recommend you install"
+	echo "StataNow 19 in"
+	echo
+	echo "    /usr/local/stata       or"
+	echo "    /usr/local/stata19     or"
+	echo "    /usr/local/statanow19"
+	echo 
+	echo "Clear or create the appropriate directory and rerun"
+	echo "$cmd"
+	echo 
+	echo "(no action taken)" 
+	exit 1
+	;;
+esac
+
+
+
+# ---- check that we can write in the current directory
+
+totry=eraseme
+if [ -f $totry ]
+then
+	totry=eraseme2
+fi
+if echo "checking write permission" > $totry
+then
+	rm $totry
+else
+	ClrScrn
+	echo "Current directory is:  $curdir"
+	echo
+	echo "You do not have write permissions for this directory, so this"
+	echo "script cannot install StataNow into it."
+	echo 
+	echo "(no action taken)" 
+	exit 1
+fi
+
+# -------  obtain user confirmation
+
+ClrScrn
+echo "About to proceed with installation:"
+echo
+echo "        To install:        $title"
+echo "        Into directory:    $curdir"
+echo
+#echo "Okay to proceed (y/n or q to quit)"
+#Answer
+#case $ANSW in
+#n)	exit 1 ;;
+#esac
+
+# -------------- copy files
+
+echo
+echo
+echo "Copying files ..."
+
+cddir=`expr $cmd : '\(.*\)\/.*'`
+case "$cddir" in
+"")	echo "Installation script error"
+	exit 2
+	;;
+esac
+
+
+if cp $cddir/unix/$plat/ado.taz ado.tar.Z > /dev/null 2>&1
+then
+	chmod 640 ado.tar.Z
+else
+	if cp $cddir/UNIX/$platU/ADO.TAZ ado.tar.Z > /dev/null 2>&1
+	then
+		chmod 640 ado.tar.Z
+	else
+		echo "could not copy $cddir/unix/$plat/ado.taz"
+		echo "installation script error"
+		exit 2
+	fi
+fi
+
+
+if cp $cddir/unix/$plat/base.taz base.tar.Z > /dev/null 2>&1
+then
+	chmod 640 base.tar.Z
+else
+	if cp $cddir/UNIX/$platU/BASE.TAZ base.tar.Z > /dev/null 2>&1
+	then
+		chmod 640 base.tar.Z
+	else
+		echo "could not copy $cddir/unix/$plat/base.taz"
+		echo "installation script error"
+		exit 2
+	fi
+fi
+
+if cp $cddir/unix/$plat/bins.taz bins.tar.Z > /dev/null 2>&1
+then
+	chmod 640 bins.tar.Z
+else
+	if cp $cddir/UNIX/$platU/BINS.TAZ bins.tar.Z > /dev/null 2>&1
+	then
+		chmod 640 bins.tar.Z
+	else
+		echo "could not copy $cddir/unix/$plat/bins.taz"
+		echo "installation script error"
+		exit 2
+	fi
+fi
+
+if cp $cddir/unix/$plat/docs.taz docs.tar.Z > /dev/null 2>&1
+then
+	chmod 640 docs.tar.Z
+else
+	if cp $cddir/UNIX/$platU/DOCS.TAZ docs.tar.Z > /dev/null 2>&1
+	then
+		chmod 640 docs.tar.Z
+	else
+		echo "could not copy $cddir/unix/$plat/docs.taz"
+		echo "installation script error"
+		exit 2
+	fi
+fi
+
+
+if cp $cddir/unix/$plat/setrwxp setrwxp > /dev/null 2>&1
+then
+	chmod 750 setrwxp
+else
+	if cp $cddir/UNIX/$platU/SETRWXP setrwxp > /dev/null 2>&1
+	then
+		chmod 750 setrwxp
+	else
+		echo "could not copy $cddir/unix/$plat/setrwxp"
+		echo "installation script error"
+		exit 2
+	fi
+fi
+
+if [ -n "$needlibs" ]
+then
+	if cp $cddir/unix/$plat/statalib.taz statalib.tar.Z > /dev/null 2>&1
+	then
+		chmod 640 statalib.tar.Z
+	else
+		if cp $cddir/UNIX/$platU/STATALIB.TAZ statalib.tar.Z > /dev/null 2>&1
+		then
+			chmod 640 statalib.tar.Z
+		else
+			echo "could not copy $cddir/unix/$plat/statalib.taz"
+			echo "installation script error"
+			exit 2
+		fi
+	fi
+fi
+
+if cp $cddir/unix/$plat/inst2 inst2 > /dev/null 2>&1
+then
+	chmod 750 inst2
+else
+	if cp $cddir/UNIX/$platU/INST2 inst2 > /dev/null 2>&1
+	then
+		chmod 750 inst2
+	else
+		echo "could not copy $cddir/unix/$plat/inst2"
+		echo "installation script error"
+		exit 2
+	fi
+fi
+
+# ------ invoke unix-specific script
+
+export plat
+./inst2 now
+
