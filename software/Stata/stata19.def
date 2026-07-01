@@ -79,8 +79,7 @@ From: ubuntu:24.04
     unixodbc-dev \
     unzip \
     vim \
-    wget \
-    && \
+    wget
 
    # Prepare install files
    cd /opt
