@@ -18,7 +18,7 @@
 
 Definition file and supporting files for installing Stata in a container environment.
 
-**By using these definition files, you are agreeing to the terms and conditions for the use of Matlab as licensed by the University of Wisconsin-Madison, for use at CHTC.**
+**By using these definition files, you are agreeing to the terms and conditions for the use of Stata as licensed by the University of Wisconsin-Madison, for use at CHTC.**
 
 ## [stata19.def](stata19.def)
 | | | |
