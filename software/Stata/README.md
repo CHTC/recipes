@@ -20,6 +20,16 @@ Definition file and supporting files for installing Stata in a container environ
 
 **By using these definition files, you are agreeing to the terms and conditions for the use of Matlab as licensed by the University of Wisconsin-Madison, for use at CHTC.**
 
+## [stata19.def](stata19.def)
+| | | |
+| ---: | :--- | :--- |
+| *Type* | **Apptainer** | |
+| *OS* | Ubuntu 24.04 | |
+| *Base image* | **ubuntu:24.04** | *DockerHub* |
+| *Updated* | 2026-07-01 | *Amber Lim* |
+| *Last tested on HTC* | 2026-06-30 | *Amber Lim* |
+| *Last tested on HPC* | - | - |
+
 ## Prerequisites
 
 * An account on CHTC systems
@@ -29,7 +39,7 @@ Definition file and supporting files for installing Stata in a container environ
    - Code
    - Authorization
 
-## Add license info to `stata19.def`
+## Add license info to the definition file
 
 > [!IMPORTANT]
 > Before you can use Stata 19 on CHTC systems, you must edit `stata19.def` to include license info. Replace these lines to the university-provided license info on the Campus Software page. *Do not include the brackets (`< >`)
@@ -40,14 +50,14 @@ Definition file and supporting files for installing Stata in a container environ
 > <REPLACE WITH AUTHORIZATION>
 > ```
 
-## Build an Apptainer on CHTC
+## Build an Apptainer image on CHTC's HTC system
 
 We recommend following [our guide](https://chtc.cs.wisc.edu/uw-research-computing/apptainer-htc) on building Apptainer containers.
 
 Make sure you have the following uploaded on CHTC:
 * `stata19.def`
 * `installv2`
-* The Stata 19 - Linux Installer (`StataNow19Linux64.tar.gz`)
+* `StataNow19Linux64.tar.gz` (The Stata 19 - Linux Installer)
 
 Then in your submit file for your interactive build job be sure to include:
 
@@ -56,3 +66,7 @@ transfer_input_files = installv2,stata.def,StataNow19Linux64.tar.gz
 ```
 
 Follow the rest of the guide to build your Stata Apptainer image.
+
+## Get help
+
+If you have questions about building or using the Stata Apptainer image, reach out to [chtc@cs.wisc.edu](mailto:chtc@cs.wisc.edu).
