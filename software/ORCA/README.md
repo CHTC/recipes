@@ -76,9 +76,17 @@ In the case of option 3, you will need to send the ORCA files along with the con
 > [!TIP]
 > You can only use the Apptainer recipe on the HPC system, but it may be easier to use the provided system modules instead of a container for better multi-node support. See the [HPC Software guide](https://chtc.cs.wisc.edu/uw-research-computing/hpc-software) for more information.
 
+### Building the container images
+
+For options 1 or 2, you will need to have the ORCA code `.tar.xz` file in the same directory as the `.def` or `Dockerfile` when you build the container. 
+
+**Be sure to update the ORCA `.tar.xz` filename in the definition file to match your version.**
+
+For option 3, you do not need to have the ORCA code file when you build the container.
+
 ### Using the container to provide dependencies
 
-If using the `Dockerfile` to provide the dependencies via a public repository, you will need to send the ORCA files along with the job.
+For option 3, you will need to send the ORCA code along with the job.
 We recommend you keep the files in their zipped form for this part.
 
 In your submit file, you will use something like this:
