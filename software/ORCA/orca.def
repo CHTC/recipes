@@ -1,0 +1,69 @@
+# !!! DO NOT UPLOAD THIS CONTAINER TO A PUBLIC REPOSITORY !!! #
+# 
+#     Otherwise you will violate the ORCA license!!
+
+Bootstrap: docker
+From: ubuntu:24.04
+
+%arguments
+    ORCA_SOURCE=orca_6_1_1_linux_x86-64_shared_openmpi418_nodmrg.tar.xz
+    # *Use the version named in your ORCA tarball file!*
+    # E.g., orca_6_1_1_linux_x86-64_shared_openmpi418.tar.xz -> OpenMPI 4.1.8
+    OPENMPI_VERSION=4.1.8
+
+%files
+    {{ ORCA_SOURCE }} /opt/{{ ORCA_SOURCE }}
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    export ORCA_SOURCE="{{ ORCA_SOURCE }}"
+    export OPENMPI_VERSION="{{ OPENMPI_VERSION }}"
+
+    # Install dependencies for OpenMPI and ORCA
+    apt-get update -y
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        wget \
+        curl \
+        tar \
+        bzip2 \
+        xz-utils \
+        build-essential \
+        gcc \
+        g++ \
+        gfortran \
+        libgomp1 \
+        libgfortran5 \
+        zlib1g-dev \
+        libstdc++6 \
+        libgcc-s1 \
+
+    rm -rf /var/lib/apt/lists/*
+
+    # Build OpenMPI from source
+    mkdir -p /tmp/openmpi
+    cd /tmp/openmpi
+
+    # The download URLs for OPENMPI are organized by major.minor series (e.g. v4.1),
+    # so we derive that from the full version number (4.1.8 -> 4.1)
+    OPENMPI_SERIES=$(echo ${OPENMPI_VERSION} | cut -d. -f1,2)
+    wget -q https://download.open-mpi.org/release/open-mpi/v${OPENMPI_SERIES}/openmpi-${OPENMPI_VERSION}.tar.gz
+    tar -xzf openmpi-${OPENMPI_VERSION}.tar.gz
+    cd openmpi-${OPENMPI_VERSION}
+    ./configure --prefix=/opt/openmpi --disable-mpi-fortran
+    make -j"$(nproc)"
+    make install
+
+    cd /
+    rm -rf /tmp/openmpi
+
+    cd /opt
+    tar -xf ${ORCA_SOURCE}
+    rm ${ORCA_SOURCE}
+    mv ./orca* ./orca
+    chmod +x ./orca/*
+
+%environment
+    export PATH="/opt/orca:/opt/openmpi/bin:${PATH}"
+    export LD_LIBRARY_PATH="/opt/orca/lib:/opt/openmpi/lib:${LD_LIBRARY_PATH}"
+

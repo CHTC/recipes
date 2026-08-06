@@ -1,0 +1,71 @@
+# !!! DO NOT UPLOAD THIS CONTAINER IMAGE TO A PUBLIC REPOSITORY !!! #
+# 
+#     Otherwise you will violate the ORCA license!!
+
+FROM ubuntu:24.04
+
+ARG ORCA_SOURCE=orca_6_1_1_linux_x86-64_shared_openmpi418_nodmrg.tar.xz
+# *Use the version named in your ORCA tarball file!*
+# E.g., orca_6_1_1_linux_x86-64_shared_openmpi418.tar.xz -> OpenMPI 4.1.8
+ARG OPENMPI_VERSION=4.1.8
+
+# Prevents apt from stopping to ask interactive questions during the build
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies for OpenMPI and ORCA
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        wget \
+        curl \
+        tar \
+        bzip2 \
+        xz-utils \
+        build-essential \
+        gcc \
+        g++ \
+        gfortran \
+        libgomp1 \
+        libgfortran5 \
+        zlib1g-dev \
+        libstdc++6 \
+        libgcc-s1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Build OpenMPI from source
+
+# Working directory just for the OpenMPI build — gets deleted afterward
+WORKDIR /tmp/openmpi
+
+RUN set -eux; \
+    # OpenMPI's download URLs are organized by major.minor series (e.g. v4.1),
+    # so we derive that from the full version number (4.1.8 -> 4.1)
+    OPENMPI_SERIES=$(echo ${OPENMPI_VERSION} | cut -d. -f1,2); \
+    wget -q https://download.open-mpi.org/release/open-mpi/v${OPENMPI_SERIES}/openmpi-${OPENMPI_VERSION}.tar.gz; \
+    tar -xzf openmpi-${OPENMPI_VERSION}.tar.gz; \
+    cd openmpi-${OPENMPI_VERSION}; \
+    ./configure --prefix=/opt/openmpi --disable-mpi-fortran; \
+    make -j"$(nproc)"; \
+    make install; \
+    cd /; \
+    rm -rf /tmp/openmpi
+
+# Copy ORCA into the container
+COPY ${ORCA_SOURCE} /opt/${ORCA_SOURCE}
+WORKDIR /opt
+# Extract, relocate, and cleanup
+RUN tar -xf ${ORCA_SOURCE} && \
+    rm ${ORCA_SOURCE} && \
+    mv ./orca* ./orca && \
+    chmod +x ./orca/*
+
+# Make the orca executable (and its helper binaries) findable on PATH,
+# and the OpenMPI binaries too.
+ENV PATH="/opt/orca:/opt/openmpi/bin:${PATH}"
+
+# /opt/orca/lib must come FIRST in LD_LIBRARY_PATH: ORCA ships its own
+# bundled libstdc++.so.6 and libgcc_s.so.1, built against specific
+# versions. If the system/OpenMPI libs get picked up instead, expect
+# GLIBCXX version-mismatch errors or silent segfaults.
+ENV LD_LIBRARY_PATH="/opt/orca/lib:/opt/openmpi/lib:${LD_LIBRARY_PATH}"
+
