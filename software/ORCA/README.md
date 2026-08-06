@@ -45,8 +45,8 @@ Be sure to select the Linux version of the software for download, e.g., `orca_6_
 
 To make it easier to work with, it is a good idea to reorganize the code into shorter names.
 
-| | Compressed name | Decompressed name |
------------------------------------------
+|  | Compressed name | Decompressed name |
+| --- | --- | --- |
 | Before | `orca_6_1_1_linux_x86-64_shared_openmpi418_nodmrg.tar.xz` | `orca_6_1_1_linux_x86-64_shared_openmpi418_nodmrg` |
 | After | `orca.tar.gz` | `orca` |
 
