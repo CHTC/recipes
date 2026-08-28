@@ -18,6 +18,9 @@
 
 > [!CAUTION]
 > This is **not a functional recipe as-is**.
+> The third-party `chtc_dependencies.tar.gz` file is deliberately excluded, as that contains licensed and closed source software.
+> 
+> Attempting to build this container as-is **will fail**.
 
 This is an example definition file of a complex Matlab container that illustrates
 
