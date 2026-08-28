@@ -14,7 +14,7 @@
    limitations under the License.
 -->
 
-# [MINEOS](/software/Matlab/MINEOS)
+# [MINEOS](/software/MINEOS)
 
 > [!CAUTION]
 > This is **not a functional recipe as-is**.
@@ -24,4 +24,6 @@ This is an example definition file of a complex Matlab container that illustrate
 * integrating custom Matlab functions
 * compiling custom Matlab `mex` files
 * compiling additional binaries
+
+For information on the base Matlab installation, see the [Matlab recipes](/software/Matlab). 
 

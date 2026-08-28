@@ -95,7 +95,7 @@ EOF
     export PATH="${MINEOS_ROOT}/FORTRAN/bin:$PATH"
 
     #  -------------------- 
-    # | Installing Propmat |
+    # | Installing PropMat |
     #  -------------------- 
 
     cd /opt/
