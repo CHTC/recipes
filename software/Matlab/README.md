@@ -22,6 +22,9 @@ Definition files for installing Matlab and Matlab Toolboxes in a container envir
 * [Matlab with Compiler](./mcc-compiler)
 * [Matlab with Symbolic Math Toolbox](./symbolic-math)
 
+> [!TIP]
+> For an example of a complex Matlab container that integrates custom toolboxes, `mex` files, and more, see [the MINEOS recipe](/software/MINEOS).
+
 The definition files will also setup Matlab to connect to the CHTC license server.
 **By using these definition files, you are agreeing to the terms and conditions for the use of Matlab as licensed by CHTC, for use at CHTC.**
 

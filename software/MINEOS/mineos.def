@@ -1,0 +1,222 @@
+Bootstrap: docker
+From: mathworks/matlab-deps:r2024b
+
+%files
+    chtc_dependencies.tar.gz /opt/custom/chtc_dependencies.tar.gz
+
+%post
+    #  ------------------------
+    # | Installing OS packages |
+    #  ------------------------
+
+    chmod 777 /tmp
+    apt-get update -y
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        bzip2 \
+        ca-certificates \
+        curl \
+        ghostscript \
+        git \
+        gfortran \
+        less \
+        libgfortran5 \
+        libgomp1 \
+        nano \
+        tar \
+        unzip \
+        vim \
+        wget
+
+    # Cleaning up OS package manager
+    apt-get clean -y
+    apt-get autoremove -y
+    rm -rf /var/lib/apt/lists/*
+
+
+    #  ------------------- 
+    # | Installing Matlab |
+    #  ------------------- 
+
+    export MATLAB_RELEASE=r2024b
+    export MATLAB_PRODUCT_LIST="MATLAB Signal_Processing_Toolbox Statistics_and_Machine_Learning_Toolbox Mapping_Toolbox"
+    export MATLAB_INSTALL_LOCATION="/opt/matlab/${MATLAB_RELEASE}"
+
+    # Downloading and running MPM
+    cd /
+    wget -q https://www.mathworks.com/mpm/glnxa64/mpm
+    chmod +x mpm
+
+    # Installs desired MATLAB packages, or prints log file on failure
+    ./mpm install \
+        --release=${MATLAB_RELEASE} \
+        --destination=${MATLAB_INSTALL_LOCATION} \
+        --products ${MATLAB_PRODUCT_LIST} \
+        || (echo "MPM Installation Failure. See below for more information:" && cat /tmp/mathworks_root.log && false)
+    rm -f mpm /tmp/mathworks_root.log
+    ln -s ${MATLAB_INSTALL_LOCATION}/bin/matlab /usr/local/bin/matlab
+
+    # FOR USE ON CHTC ONLY >>>
+    mkdir -p ${MATLAB_INSTALL_LOCATION}/licenses
+    cat << EOF > ${MATLAB_INSTALL_LOCATION}/licenses/network.lic
+# CHTC Network License file for using MATLAB
+SERVER matlab.chtc.wisc.edu 27000
+USE_SERVER
+EOF
+    # <<< FOR USE ON CHTC ONLY
+
+
+    #  ------------------- 
+    # | Installing MINEOS |
+    #  ------------------- 
+
+    cd /opt/
+    git clone https://github.com/brennanbrunsvik/MINEOS_synthetics
+    cd MINEOS_synthetics/
+    git checkout b60c83b7b8766d977d35f15e097103da3815ae23
+
+    export MINEOS_ROOT="$(pwd)"
+
+    # Before compiling the FORTRAN code, need to compile the libgfortran items inside of it.
+    # (Not the same as what is provided by 'apt install libgfortran5' - suspect that this
+    # is poor naming, but not certain.)
+    cd ${MINEOS_ROOT}/FORTRAN/libgfortran
+    chmod +x makelibs.sh
+    ./makelibs.sh
+
+    # Now should be able to compile the FORTRAN code...
+    cd ${MINEOS_ROOT}/FORTRAN
+    mkdir -p bin
+    chmod +x makeall_linux.sh
+    ./makeall_linux.sh
+    # This compile has some errors regarding "sac", but that is a controlled software
+    # that supposedly is not required for MINEOS.
+
+    export PATH="${MINEOS_ROOT}/FORTRAN/bin:$PATH"
+
+    #  -------------------- 
+    # | Installing PropMat |
+    #  -------------------- 
+
+    cd /opt/
+    git clone https://github.com/brennanbrunsvik/PropMat
+    cd PropMat
+    git checkout 7485d018c65a65d1bb09c7b56627c918c1cb8a29
+
+    export PROPMAT_ROOT="$(pwd)"
+
+    # Extract additional dependencies
+    cd /opt/custom
+    tar --no-same-owner -xzf chtc_dependencies.tar.gz
+    rm chtc_dependencies.tar.gz
+
+    # Apply patch
+    cp /opt/custom/propmat/Makefile_wpar ${PROPMAT_ROOT}/src/
+    
+    # Build binaries
+    cd ${PROPMAT_ROOT}/src/
+    mkdir -p ../bin
+    make -f Makefile_wpar
+
+    export PATH="${PROPMAT_ROOT}/bin:$PATH"
+
+    #  --------------------- 
+    # | Installing HVkernel |
+    #  --------------------- 
+
+    export HVKERNEL_ROOT=/opt/hvkernel
+
+    mkdir -p $HVKERNEL_ROOT
+    cp -r /opt/custom/hvkernel/src $HVKERNEL_ROOT/src
+
+    cd $HVKERNEL_ROOT/src
+    mkdir -p ../bin
+    make
+
+    export PATH="${HVKERNEL_ROOT}/bin:$PATH"
+
+    #  ---------------------- 
+    # | Preparing export_fig |
+    #  ---------------------- 
+
+    cd /opt/
+    git clone https://github.com/altmany/export_fig
+    cd export_fig
+    git checkout 1aa0793114697d8c38e899907912dfaff36758a8
+
+    export EXPORTFIG_ROOT="$(pwd)"
+    export MATLABPATH="${EXPORTFIG_ROOT}:${MATLABPATH}"
+
+    #  --------------------- 
+    # | Preparing BrewerMap |
+    #  --------------------- 
+
+    cd /opt/
+    git clone https://github.com/DrosteEffect/BrewerMap
+    cd BrewerMap
+    git checkout b373eabfeeda1296d9d39e0fe251a6464d4fae3e
+
+    export BREWERMAP_ROOT="$(pwd)"
+    export MATLABPATH="${BREWERMAP_ROOT}:${MATLABPATH}"
+
+    #  ------------------ 
+    # | Preparing SEIZMO |
+    #  ------------------ 
+
+    export SEIZMO_ROOT="/opt/seizmo"
+
+    mkdir -p $SEIZMO_ROOT
+
+    cd /opt/
+    git clone https://github.com/g2e/seizmo seizmo-full
+    cd seizmo-full
+    git checkout 2d16c34ee5a156c755587ab67b9edd63e077c8b8
+
+    # Only need the top level files and the 'mattaup' and 'models' directories.
+    mv README CONTRIB *.* ${SEIZMO_ROOT}/
+    mv mattaup ${SEIZMO_ROOT}/mattaup
+    mv models ${SEIZMO_ROOT}/models
+
+    # Remove remaining files
+    cd ../
+    rm -rf seizmo-full
+
+    export MATLABPATH="${SEIZMO_ROOT}/mattaup:${SEIZMO_ROOT}/models:${MATLABPATH}"
+
+    #  ----------------------- 
+    # | Preparing fastBSpline |
+    #  ----------------------- 
+
+    export FASTBSPLINE_ROOT=/opt/fastBSpline
+    mkdir -p $FASTBSPLINE_ROOT
+
+    cp -r /opt/custom/fastBSpline/* ${FASTBSPLINE_ROOT}/
+
+    # Compile mex files using provided function.
+    cd $FASTBSPLINE_ROOT
+    matlab -batch "CompileMexFiles"
+    
+    export MATLABPATH="${FASTBSPLINE_ROOT}:${MATLABPATH}"
+
+    #  --------------------- 
+    # | Setting Environment |
+    #  --------------------- 
+
+    # Setting environment variables at startup
+    cat << EOF >> $APPTAINER_ENVIRONMENT
+export PATH=$PATH
+export MATLABPATH=$MATLABPATH
+
+export BREWERMAP_ROOT=$BREWERMAP_ROOT
+export EXPORTFIG_ROOT=$EXPORTFIG_ROOT
+export FASTBSPLINE_ROOT=$FASTBSPLINE_ROOT
+export HVKERNEL_ROOT=$HVKERNEL_ROOT
+export MINEOS_ROOT=$MINEOS_ROOT
+export PROPMAT_ROOT=$PROPMAT_ROOT
+export SEIZMO_ROOT=$SEIZMO_ROOT
+
+export MATLAB_RELEASE=$MATLAB_RELEASE
+export MATLAB_PRODUCT_LIST=$MATLAB_PRODUCT_LIST
+export MATLAB_INSTALL_LOCATION=$MATLAB_INSTALL_LOCATION
+EOF
+
