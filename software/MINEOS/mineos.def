@@ -39,7 +39,7 @@ From: mathworks/matlab-deps:r2024b
     #  ------------------- 
 
     export MATLAB_RELEASE=r2024b
-    export MATLAB_PRODUCT_LIST="MATLAB"
+    export MATLAB_PRODUCT_LIST="MATLAB Signal_Processing_Toolbox Statistics_and_Machine_Learning_Toolbox Mapping_Toolbox"
     export MATLAB_INSTALL_LOCATION="/opt/matlab/${MATLAB_RELEASE}"
 
     # Downloading and running MPM
