@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: rockylinux:9
+
+%post
+    # base dnf/yum setup
+    dnf -y update && \
+        dnf -y install yum-utils && \
+        dnf -y config-manager --set-enabled crb && \
+        dnf -y install epel-release
+
+    # well rounded basic system to support a wide range of user jobs
+    dnf -y groupinstall "Development Tools" "Scientific Support"
+
+    dnf -y install --allowerasing \
+            cpio \
+            git \
+            nano \
+            python3 \
+            python3-pip \
+            python3-devel \
+            rpm \
+            tree \
+            unzip \
+            vim \
+            wget
+
+    # Installing unprivileged apptainer inside of the container
+    # adapted from https://apptainer.org/docs/admin/1.4/installation.html#install-unprivileged-from-pre-built-binaries
+    mkdir -p /opt
+    curl -s https://raw.githubusercontent.com/apptainer/apptainer/main/tools/install-unprivileged.sh | bash -s - /opt/apptainer
+    
+%environment
+    export PATH="/opt/apptainer/bin:${PATH}"
