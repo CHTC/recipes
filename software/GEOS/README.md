@@ -1,4 +1,4 @@
-# GEOS
+# [GEOS](/software/GEOS)
 
 <!--
    Copyright 2026, Center for High Throughput Computing, University of Wisconsin - Madison
@@ -16,9 +16,7 @@
    limitations under the License.
 -->
 
-# [GEOS](/software/GEOS)
-
-Recipe for installing [GEOS](https://github.com/GEOS-DEV/GEOS/tree/develop) on CHTC's HPC system.
+Recipe for installing [GEOS](https://github.com/GEOS-DEV/GEOS) on CHTC's HPC system.
 
 Please refer to the [general GEOS installation guide](https://geosx-geosx.readthedocs-hosted.com/en/latest/docs/sphinx/QuickStart.html) for customizing your own install.
 
@@ -38,12 +36,9 @@ Please refer to the [general GEOS installation guide](https://geosx-geosx.readth
 | BLAS | Already installed | - |
 | LAPACK | Already installed | - |
 
-> [!IMPORTANT]  
-> These instructions assume you are creating an individual install of GEOS. If you are creating a group installation of GEOS, make sure you install/work in the `/home/groups/my_group` directory, and set you/your group members' `PATH` variables to point to the correct install locations.
-
 ### Install a local copy of Git LFS on the HPC system
 
-If you don't already have Git LFS installed, follow these instructions to install it. These instructions install version 3.7.1, but you may use another version, as long as it is tagged with `linux-amd64`.
+If you don't already have [Git LFS](https://github.com/git-lfs/git-lfs#installing) installed, follow these instructions to install it. These instructions install version 3.7.1, but you may use another version, as long as it is tagged with `linux-amd64`.
 
 1. Download the git-lfs installation files to your `/home` directory.
 
@@ -77,7 +72,10 @@ GEOS can be a tricky install. Overview of our current procedure:
 
 See [general GEOS installation guide](https://geosx-geosx.readthedocs-hosted.com/en/latest/docs/sphinx/QuickStart.html) for more details.
 
-1. Set up the directory structure.
+> [!IMPORTANT]  
+> These instructions assume you are creating an individual install of GEOS. If you are creating a group installation of GEOS, make sure you install and work in the `/home/groups/my_group` directory, and set you and your group members' `PATH` variables to point to the correct install locations.
+
+1. Set up the directory structure. Here, we are setting the install directory to the user's home directory.
 
     ```
     export install_dir=$HOME/geos
@@ -97,6 +95,7 @@ See [general GEOS installation guide](https://geosx-geosx.readthedocs-hosted.com
 
 1. Clone thirdPartyLibs into the geos directory.
 
+    ```
 	cd $install_dir
 	git clone https://github.com/GEOS-DEV/thirdPartyLibs.git
 	cd thirdPartyLibs
@@ -105,6 +104,7 @@ See [general GEOS installation guide](https://geosx-geosx.readthedocs-hosted.com
 	git submodule init
 	git submodule update
 	cd ..
+    ```
 
 1. Clone [hypre](https://github.com/hypre-space/hypre) and [hypredrive](https://github.com/hypre-space/hypredrive).
 
@@ -120,7 +120,7 @@ Upload `spark-login-tpl.cmake` into the `$install_dir/GEOS/host-configs` directo
 
 ```
 cd $install_dir/GEOS/host-configs
-wget <insert url here>
+wget https://github.com/CHTC/recipes/raw/main/software/GEOS/spark-login-tpl.cmake
 cp spark-login-tpl.cmake spark-login.cmake
 ```
 
@@ -135,7 +135,7 @@ Third-party libraries will take anywhere between 30 minutes to over an hour to i
 cd /scratch/$USER
 mkdir build-geos
 cd build-geos
-wget <insert url here>
+wget https://github.com/CHTC/recipes/raw/main/software/GEOS/build-tpl.sh
 sbatch build-tpl.sh
 ```
 
@@ -145,7 +145,7 @@ There are currently incompatibilities with using hypre/hypredrive as packaged wi
 
 ```
 cd /scratch/$USER/build-geos
-wget <script>
+wget https://github.com/CHTC/recipes/raw/main/software/GEOS/build-hypredrive.sh
 sbatch build-hypredrive.sh
 ```
 
@@ -162,7 +162,7 @@ Next, we need to replace the `spark-login.cmake` file with a new cmake file, wit
 
 ```
 mv $install_dir/GEOS/host-configs
-wget <link>
+wget https://github.com/CHTC/recipes/raw/main/software/GEOS/spark-login-geos.cmake
 cp spark-login-geos.cmake spark-login.cmake
 ```
 
@@ -170,6 +170,6 @@ Then build GEOS.
 
 ```
 cd /scratch/$USER/build-geos
-wget <script>
+wget https://github.com/CHTC/recipes/raw/main/software/GEOS/build-geos.sh
 sbatch build-geos.sh
 ```
