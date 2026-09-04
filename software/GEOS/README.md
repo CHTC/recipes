@@ -173,3 +173,32 @@ cd /scratch/$USER/build-geos
 wget https://github.com/CHTC/recipes/raw/main/software/GEOS/build-geos.sh
 sbatch build-geos.sh
 ```
+
+## Add GEOS to your `PATH` or a custom module
+
+After installation, you may consider adding GEOS to your `PATH` or creating a custom module.
+
+### Add GEOS to your `PATH`
+
+This example assumes GEOS is in your `/home` directory. In your `~/.bashrc`, add:
+
+```
+export PATH=$HOME/geos/GEOS/install-spark-login-release/bin:$PATH
+```
+
+### Create a custom module for GEOS
+
+Follow our guide for [creating custom modules](https://chtc.cs.wisc.edu/uw-research-computing/hpc-custom-modules). An example module file, `2026-08-31.lua`:
+
+```
+help([[
+GEOS (2026-08-31)
+]])
+whatis("Name: GEOS")
+whatis("Version: 2026-08-31")
+whatis("Keywords: GEOS")
+whatis("URL: https://github.com/GEOS-DEV/GEOS")
+whatis("Description: GEOS is a simulation framework for modeling coupled flow, transport, and geomechanics in the subsurface. The code provides advanced solvers for a number of target applications, including carbon sequestration, geothermal energy, and similar systems.")
+
+prepend_path("PATH","/home/netid/geos/GEOS/install-spark-login-release/bin")
+```
