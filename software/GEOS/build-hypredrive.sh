@@ -8,7 +8,7 @@
 #SBATCH --error=build-hypredrive.err
 #SBATCH --output=build-hypredrive.out
 
-export install_dir=/home/$USER/geos
+export install_dir=$HOME/geos
 
 module load cmake gcc openmpi
 

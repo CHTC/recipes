@@ -8,7 +8,7 @@
 #SBATCH --error=build-geos.err
 #SBATCH --output=build-geos.out
 
-export install_dir=/home/$USER/GEOScodes
+export install_dir=$HOME/geos
 
 module load cmake gcc openmpi
 cd $install_dir/GEOS

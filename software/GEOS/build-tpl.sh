@@ -8,7 +8,7 @@
 #SBATCH --error=build-tpl.err
 #SBATCH --output=build-tpl.out
 
-export install_dir=/home/$USER/geos
+export install_dir=$HOME/geos
 
 module load cmake gcc openmpi
 
