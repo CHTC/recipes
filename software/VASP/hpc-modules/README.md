@@ -1,10 +1,26 @@
-# Instructions for Installing VASP v6.2.0 on CHTC's Spark cluster
+<!--
+   Copyright 2025, Center for High Throughput Computing, University of Wisconsin - Madison
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+# VASP recipe for HPC using system modules
 
 Follow the process below to install VASP to your /home directory on the Spark cluster.
 
 This assumes that
 
-1. you have a CHTC account that has been activated for use on the Spark cluster
+1. you have a CHTC account that has been activated for use on `spark-login.chtc.wisc.edu`
 2. you have a copy of the `vasp.6.2.0.tgz` source code
 
 > [!WARNING]
