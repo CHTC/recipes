@@ -59,8 +59,8 @@ Software should always be compiled in the /home directory.
 
 * If compiling the software to share as a group: use /home/groups/yourGroupName.
 
-    > [!TIP]
-    > If you do not know your group directory, or if it does not exist, contact the facilitation team for assistance.
+> [!TIP]
+> If you do not know your group directory, or if it does not exist, contact the facilitation team for assistance.
 
 For good organization, we recommend that you create a parent `vasp` directory to work out of:
 
@@ -219,6 +219,8 @@ make: *** [makefile:9: ncl] Error 2
 > [!IMPORTANT]
 > If you run into compilation errors, see the [troubleshooting section below](#troubleshooting) for more guidance.
 
+When you have finished compiling VASP, exit the interactive job.
+
 ## Using VASP in future jobs
 
 To run calculations on the Spark cluster, you need to create an "sbatch" script for submitting the job using Slurm.
@@ -238,6 +240,9 @@ srun --mpi=pmix yourVASPcommandHere
 where you need to make sure the path to the `bin` folder is correct, and you need to replace `yourVASPcommandHere` with the command you want to run.
 
 Other commands can be included in the script as desired.
+
+> [!TIP]
+> You can create a custom module for VASP. See [this guide](https://chtc.cs.wisc.edu/uw-research-computing/hpc-custom-modules) for more information.
 
 ## Troubleshooting
 
