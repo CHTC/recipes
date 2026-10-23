@@ -128,6 +128,9 @@ ls -F
 
 ### Obtain the include file
 
+We've provided a file that we've configured to work with the HPC system.
+This file is used by the VASP program to find the software available for use on the system.
+
 Download the include file by running the following command:
 
 ```bash
@@ -140,10 +143,6 @@ You should now see this:
 ls -F
 # README.md  arch/  bin/  build/  makefile  makefile.include  src/  testsuite/  tools/
 ```
-
-You are downloading a custom version of this file for use on the Spark cluster 
-that we host in our [Recipes GitHub repository](https://github.com/CHTC/recipes).
-This file is used by the VASP program to find the software available for use on the system.
 
 ### Start an interactive session
 
